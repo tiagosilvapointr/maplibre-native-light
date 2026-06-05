@@ -54,6 +54,13 @@ filegroup(
     visibility = ["//visibility:public"],
 )
 
+# Light variant — Metal renderer only.
+filegroup(
+    name = "ios_objcpp_srcs_light",
+    srcs = MLN_IOS_PUBLIC_OBJCPP_SOURCE + MLN_IOS_PUBLIC_OBJCPP_METAL_SOURCE,
+    visibility = ["//visibility:public"],
+)
+
 filegroup(
     name = "ios_objc_srcs",
     srcs = MLN_IOS_PUBLIC_OBJC_SOURCE,
@@ -99,12 +106,33 @@ genrule(
     }),
 )
 
+# Trimmed umbrella header for the light xcframework. The source Mapbox.h
+# gates excluded imports with `#if !defined(MLN_LIGHT_BUILD)`. Consumers
+# of the shipped framework don't define that macro, so we prepend
+# `#define MLN_LIGHT_BUILD 1` to the file we ship and rename the source
+# Mapbox.h aside. The shipped header is still named Mapbox.h so
+# `#import <Mapbox/Mapbox.h>` resolves unchanged.
+genrule(
+    name = "mapbox_h_light",
+    srcs = ["src/Mapbox.h"],
+    outs = ["light/Mapbox.h"],
+    cmd = "printf '#define MLN_LIGHT_BUILD 1\\n' > $@ && cat $(location src/Mapbox.h) >> $@",
+)
+
 public_hdrs = [
     ":mln_defines",
     ":ios_public_hdrs",
     ":ios_sdk_hdrs",
     "//platform/darwin:darwin_objc_hdrs",
     "//platform/darwin:generated_style_public_hdrs",
+]
+
+public_hdrs_light = [
+    ":mln_defines",
+    ":mapbox_h_light",
+    ":ios_sdk_hdrs",
+    "//platform/darwin:darwin_objc_hdrs_light",
+    "//platform/darwin:generated_style_public_hdrs_light",
 ]
 
 apple_static_xcframework(
@@ -135,6 +163,58 @@ apple_bundle_version(
     },
     fallback_build_label = "maplibre_ios_1.2.3456789",
     short_version_string = "{version}",
+)
+
+# =========================================================================
+# Light xcframework targets — see //bazel:core_light.bzl for what is dropped.
+# Build with the Metal renderer (mbgl-core-light is Metal-only):
+#   bazel build //platform/ios:MapLibreLight.dynamic --//:renderer=metal
+#   bazel build //platform/ios:MapLibreLight.static  --//:renderer=metal
+# =========================================================================
+
+apple_static_xcframework(
+    name = "MapLibreLight.static",
+    bundle_id = "com.maplibre.maplibrelight",
+    bundle_name = "MapLibre",
+    infoplists = ["info_static_plist"],
+    ios = {
+        "simulator": [
+            "x86_64",
+            "arm64",
+        ],
+        "device": ["arm64"],
+    },
+    minimum_os_versions = {"ios": "12.0"},
+    public_hdrs = public_hdrs_light,
+    version = ":maplibre_ios_version",
+    visibility = ["//visibility:public"],
+    deps = ["//platform:ios-sdk-light"],
+)
+
+apple_xcframework(
+    name = "MapLibreLight.dynamic",
+    bundle_id = "com.maplibre.maplibrelight",
+    bundle_name = "MapLibre",
+    data = glob([
+        "resources/*.lproj/**",
+        "resources/*.xcassets/**",
+    ]) + [
+        "PrivacyInfo.xcprivacy",
+        "resources/metal-cpp-ignores.txt",
+    ],
+    infoplists = ["info_plist"],
+    ios = {
+        "simulator": [
+            "x86_64",
+            "arm64",
+        ],
+        "device": ["arm64"],
+    },
+    minimum_os_versions = {"ios": "12.0"},
+    public_hdrs = public_hdrs_light,
+    version = ":maplibre_ios_version",
+    visibility = ["//visibility:public"],
+    deps = ["//platform:ios-sdk-light-dynamic"],
 )
 
 apple_xcframework(

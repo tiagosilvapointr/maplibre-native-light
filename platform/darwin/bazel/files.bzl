@@ -249,3 +249,78 @@ MLN_DARWIN_PUBLIC_OBJC_SOURCE = [
     "src/NSURL+MLNAdditions.m",
     "src/NSValue+MLNAdditions.m",
 ]
+
+# ----------------------------------------------------------------------
+# Light variant — see //bazel:core_light.bzl for the matching C++ core
+# exclusions. Drops the public headers, _Private headers, and .mm sources
+# for the layer wrappers / sources whose underlying mbgl::style::* impls
+# are excluded from the light core build.
+
+_LIGHT_EXCLUDED_GENERATED_STYLE_SOURCE = [
+    "src/MLNColorReliefStyleLayer.mm",
+    "src/MLNHeatmapStyleLayer.mm",
+    "src/MLNHillshadeStyleLayer.mm",
+    "src/MLNRasterStyleLayer.mm",
+]
+
+_LIGHT_EXCLUDED_GENERATED_STYLE_PUBLIC_HEADERS = [
+    "src/MLNColorReliefStyleLayer.h",
+    "src/MLNHeatmapStyleLayer.h",
+    "src/MLNHillshadeStyleLayer.h",
+    "src/MLNRasterStyleLayer.h",
+]
+
+_LIGHT_EXCLUDED_GENERATED_STYLE_HEADERS = [
+    "src/MLNColorReliefStyleLayer_Private.h",
+    "src/MLNHeatmapStyleLayer_Private.h",
+    "src/MLNHillshadeStyleLayer_Private.h",
+    "src/MLNRasterStyleLayer_Private.h",
+]
+
+_LIGHT_EXCLUDED_DARWIN_OBJC_HEADERS = [
+    "src/MLNCustomStyleLayer.h",
+    "src/MLNCustomDrawableStyleLayer.h",
+    "src/MLNImageSource.h",
+    "src/MLNRasterDEMSource.h",
+    "src/MLNRasterTileSource.h",
+]
+
+_LIGHT_EXCLUDED_DARWIN_PRIVATE_HEADERS = [
+    "src/MLNCustomStyleLayer_Private.h",
+    "src/MLNRasterTileSource_Private.h",
+]
+
+_LIGHT_EXCLUDED_DARWIN_PUBLIC_OBJCPP_SOURCE = [
+    "src/MLNCustomStyleLayer.mm",
+    "src/MLNImageSource.mm",
+    "src/MLNRasterDEMSource.mm",
+    "src/MLNRasterTileSource.mm",
+]
+
+def _filter(items, excluded):
+    return [item for item in items if item not in excluded]
+
+MLN_GENERATED_DARWIN_STYLE_SOURCE_LIGHT = _filter(
+    MLN_GENERATED_DARWIN_STYLE_SOURCE,
+    _LIGHT_EXCLUDED_GENERATED_STYLE_SOURCE,
+)
+MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS_LIGHT = _filter(
+    MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS,
+    _LIGHT_EXCLUDED_GENERATED_STYLE_PUBLIC_HEADERS,
+)
+MLN_GENERATED_DARWIN_STYLE_HEADERS_LIGHT = _filter(
+    MLN_GENERATED_DARWIN_STYLE_HEADERS,
+    _LIGHT_EXCLUDED_GENERATED_STYLE_HEADERS + _LIGHT_EXCLUDED_GENERATED_STYLE_PUBLIC_HEADERS,
+)
+MLN_DARWIN_OBJC_HEADERS_LIGHT = _filter(
+    MLN_DARWIN_OBJC_HEADERS,
+    _LIGHT_EXCLUDED_DARWIN_OBJC_HEADERS,
+)
+MLN_DARWIN_PRIVATE_HEADERS_LIGHT = _filter(
+    MLN_DARWIN_PRIVATE_HEADERS,
+    _LIGHT_EXCLUDED_DARWIN_PRIVATE_HEADERS,
+)
+MLN_DARWIN_PUBLIC_OBJCPP_SOURCE_LIGHT = _filter(
+    MLN_DARWIN_PUBLIC_OBJCPP_SOURCE,
+    _LIGHT_EXCLUDED_DARWIN_PUBLIC_OBJCPP_SOURCE,
+)

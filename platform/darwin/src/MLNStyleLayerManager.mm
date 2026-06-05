@@ -1,18 +1,32 @@
 #import "MLNStyleLayerManager.h"
 
+#if !defined(MBGL_LAYER_BACKGROUND_DISABLE_ALL)
 #import "MLNBackgroundStyleLayer_Private.h"
+#endif
 #import "MLNCircleStyleLayer_Private.h"
+#if !defined(MBGL_LAYER_COLOR_RELIEF_DISABLE_ALL)
 #import "MLNColorReliefStyleLayer_Private.h"
+#endif
+#if !defined(MBGL_LAYER_CUSTOM_DISABLE_ALL) && !defined(MLN_LIGHT_BUILD)
 #import "MLNCustomStyleLayer_Private.h"
+#endif
 #import "MLNFillExtrusionStyleLayer_Private.h"
 #import "MLNFillStyleLayer_Private.h"
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
 #import "MLNHeatmapStyleLayer_Private.h"
+#endif
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 #import "MLNHillshadeStyleLayer_Private.h"
+#endif
 #import "MLNLineStyleLayer_Private.h"
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #import "MLNRasterStyleLayer_Private.h"
+#endif
 #import "MLNSymbolStyleLayer_Private.h"
 
+#if !defined(MLN_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL)
 #import "MLNCustomDrawableStyleLayer_Private.h"
+#endif
 
 #include <vector>
 

@@ -12,7 +12,9 @@ FOUNDATION_EXPORT MLN_EXPORT const unsigned char MapboxVersionString[];
 #import "MLNAnnotationView.h"
 #import "MLNAttributedExpression.h"
 #import "MLNAttributionInfo.h"
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNBackgroundStyleLayer.h"
+#endif
 #import "MLNCalloutView.h"
 #import "MLNCircleStyleLayer.h"
 #import "MLNClockDirectionFormatter.h"
@@ -21,17 +23,21 @@ FOUNDATION_EXPORT MLN_EXPORT const unsigned char MapboxVersionString[];
 #import "MLNCompassDirectionFormatter.h"
 #import "MLNComputedShapeSource.h"
 #import "MLNCoordinateFormatter.h"
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNCustomDrawableStyleLayer.h"
 #import "MLNCustomStyleLayer.h"
+#endif
 #import "MLNDistanceFormatter.h"
 #import "MLNFeature.h"
 #import "MLNFillExtrusionStyleLayer.h"
 #import "MLNFillStyleLayer.h"
 #import "MLNForegroundStyleLayer.h"
 #import "MLNGeometry.h"
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNHeatmapStyleLayer.h"
 #import "MLNHillshadeStyleLayer.h"
 #import "MLNImageSource.h"
+#endif
 #import "MLNLight.h"
 #import "MLNLineStyleLayer.h"
 #import "MLNLocationManager.h"
@@ -52,9 +58,11 @@ FOUNDATION_EXPORT MLN_EXPORT const unsigned char MapboxVersionString[];
 #import "MLNPointCollection.h"
 #import "MLNPolygon.h"
 #import "MLNPolyline.h"
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNRasterDEMSource.h"
 #import "MLNRasterStyleLayer.h"
 #import "MLNRasterTileSource.h"
+#endif
 #import "MLNSettings.h"
 #import "MLNShape.h"
 #import "MLNShapeCollection.h"

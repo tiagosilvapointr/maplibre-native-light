@@ -1,5 +1,6 @@
 load("@aspect_rules_js//js:defs.bzl", "js_binary")
 load("@rules_cc//cc:defs.bzl", "objc_library")
+load("//bazel:core_light.bzl", "LIGHT_OBJC_DEFINES")
 load("//bazel:flags.bzl", "CPP_FLAGS", "MAPLIBRE_FLAGS", "WARNING_FLAGS")
 
 objc_library(
@@ -239,6 +240,158 @@ objc_library(
     deps = [
         ":objc-sdk",
         ":objcpp-sdk",
+    ],
+)
+
+# =====================================================================
+# Light SDK variants — feed //platform/ios:MapLibreLight.dynamic and
+# //platform/ios:MapLibreLight.static. See //bazel:core_light.bzl for
+# the source/header/define filtering details.
+# =====================================================================
+
+objc_library(
+    name = "objcpp-sdk-light",
+    srcs = [
+        "//platform/darwin:darwin_objcpp_srcs_light",
+        "//platform/darwin:generated_style_srcs_light",
+        "//platform/ios:ios_objcpp_srcs_light",
+        "//platform/ios:ios_private_hdrs",
+        "//platform/ios:ios_public_hdrs",
+        "//platform/ios:ios_sdk_hdrs",
+    ],
+    copts = CPP_FLAGS + MAPLIBRE_FLAGS + [
+        "-fcxx-modules",
+        "-fmodules",
+        "-Wno-c99-extensions",
+        "-Wno-gnu-zero-variadic-macro-arguments",
+        "-Wno-gnu-conditional-omitted-operand",
+        "-Wno-gnu-statement-expression",
+        "-Wno-deprecated-declarations",
+    ],
+    defines = ["GLES_SILENCE_DEPRECATION=1"] + LIGHT_OBJC_DEFINES,
+    includes = [
+        "darwin/include",
+    ],
+    sdk_frameworks = [
+        "CoreImage",
+        "CoreGraphics",
+        "CoreLocation",
+        "QuartzCore",
+        "MetalKit",
+    ],
+    deps = [
+        ":objc-headers-light",
+        "//:mbgl-core-light",
+        "//platform/darwin:darwin-generated-style-artifacts-light",
+        "//platform/darwin:darwin-objcpp-light",
+        "//platform/default:mbgl-default-light",
+        "//platform/ios/vendor:SMCalloutView",
+    ],
+)
+
+objc_library(
+    name = "objc-sdk-light",
+    srcs = [
+        "//platform/darwin:darwin_objc_srcs",
+        "//platform/ios:ios_objc_srcs",
+        "//platform/ios:ios_private_hdrs",
+        "//platform/ios:ios_public_hdrs",
+        "//platform/ios:ios_sdk_hdrs",
+    ],
+    hdrs = [
+        "//platform/darwin:include/mbgl/util/image+MLNAdditions.hpp",
+    ],
+    copts = select({
+        "@platforms//os:ios": WARNING_FLAGS["ios"],
+        "@platforms//os:macos": WARNING_FLAGS["macos"],
+    }) + MAPLIBRE_FLAGS + [
+        "-fmodules",
+        "-Wno-gnu-zero-variadic-macro-arguments",
+        "-Wno-variadic-macros",
+        "-Wno-gnu-conditional-omitted-operand",
+        "-Wno-deprecated-declarations",
+    ],
+    defines = LIGHT_OBJC_DEFINES,
+    includes = [
+        "darwin/include",
+    ],
+    sdk_frameworks = [
+        "CoreGraphics",
+        "CoreLocation",
+        "QuartzCore",
+    ],
+    deps = [
+        ":objc-headers-light",
+        "//:mbgl-core-light",
+        "//platform/darwin:darwin-generated-style-artifacts-light",
+        "//platform/darwin:darwin-objc-light",
+        "//platform/default:mbgl-default-light",
+        "//platform/ios/vendor:SMCalloutView",
+    ],
+)
+
+objc_library(
+    name = "objc-headers-light",
+    includes = [
+        "darwin/src",
+        "ios/src",
+    ],
+    sdk_frameworks = [
+        "CoreGraphics",
+        "CoreLocation",
+        "QuartzCore",
+    ],
+    deps = [
+        "//platform/darwin:darwin-objc-light",
+        "//platform/darwin:darwin-objcpp-light",
+    ],
+)
+
+# Light SDK for the static MapLibreLight xcframework — includes resources.
+objc_library(
+    name = "ios-sdk-light",
+    hdrs = [
+        "//platform/darwin:darwin_objc_hdrs_light",
+        "//platform/darwin:generated_style_public_hdrs_light",
+        "//platform/ios:ios_sdk_hdrs",
+    ],
+    data = ["//platform/ios:resources"],
+    module_name = "MapLibre",
+    sdk_dylibs = [
+        "libz",
+        "libsqlite3",
+        "libc++",
+        "libbz2",
+    ],
+    sdk_frameworks = [
+        "MobileCoreServices",
+        "Security",
+        "WebKit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":objc-sdk-light",
+        ":objcpp-sdk-light",
+    ],
+)
+
+# Light SDK for the dynamic MapLibreLight xcframework.
+objc_library(
+    name = "ios-sdk-light-dynamic",
+    sdk_dylibs = [
+        "libz",
+        "libsqlite3",
+        "libc++",
+    ],
+    sdk_frameworks = [
+        "MobileCoreServices",
+        "Security",
+        "WebKit",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        ":objc-sdk-light",
+        ":objcpp-sdk-light",
     ],
 )
 

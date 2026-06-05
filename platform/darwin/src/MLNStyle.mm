@@ -1,24 +1,38 @@
 #import "MLNStyle_Private.h"
 
+#if !defined(MBGL_LAYER_BACKGROUND_DISABLE_ALL)
 #import "MLNBackgroundStyleLayer.h"
+#endif
 #import "MLNCircleStyleLayer.h"
+#if !defined(MBGL_LAYER_COLOR_RELIEF_DISABLE_ALL)
 #import "MLNColorReliefStyleLayer.h"
+#endif
 #import "MLNFillExtrusionStyleLayer.h"
 #import "MLNFillStyleLayer.h"
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
 #import "MLNHeatmapStyleLayer.h"
+#endif
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 #import "MLNHillshadeStyleLayer.h"
+#endif
 #import "MLNLineStyleLayer.h"
 #import "MLNMapView_Private.h"
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #import "MLNRasterStyleLayer.h"
+#endif
 #import "MLNStyleLayer.h"
 #import "MLNStyleLayerManager.h"
 #import "MLNStyleLayer_Private.h"
 #import "MLNSymbolStyleLayer.h"
 
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNImageSource.h"
+#endif
 #import "MLNLight_Private.h"
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNRasterDEMSource.h"
 #import "MLNRasterTileSource.h"
+#endif
 #import "MLNShapeSource.h"
 #import "MLNSource.h"
 #import "MLNSource_Private.h"
@@ -32,15 +46,19 @@
 #include <mbgl/style/image.hpp>
 #include <mbgl/style/light.hpp>
 #include <mbgl/style/sources/geojson_source.hpp>
+#if !defined(MLN_LIGHT_BUILD)
 #include <mbgl/style/sources/image_source.hpp>
 #include <mbgl/style/sources/raster_dem_source.hpp>
 #include <mbgl/style/sources/raster_source.hpp>
+#endif
 #include <mbgl/style/sources/vector_source.hpp>
 #include <mbgl/style/style.hpp>
 
 #import "NSDate+MLNAdditions.h"
 
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNCustomStyleLayer.h"
+#endif
 
 #if TARGET_OS_IPHONE
 #import "UIImage+MLNAdditions.h"
@@ -204,12 +222,14 @@ const MLNExceptionName MLNRedundantSourceIdentifierException =
     return [[MLNVectorTileSource alloc] initWithRawSource:vectorSource stylable:self.stylable];
   } else if (auto geoJSONSource = rawSource->as<mbgl::style::GeoJSONSource>()) {
     return [[MLNShapeSource alloc] initWithRawSource:geoJSONSource stylable:self.stylable];
+#if !defined(MLN_LIGHT_BUILD)
   } else if (auto rasterSource = rawSource->as<mbgl::style::RasterSource>()) {
     return [[MLNRasterTileSource alloc] initWithRawSource:rasterSource stylable:self.stylable];
   } else if (auto rasterDEMSource = rawSource->as<mbgl::style::RasterDEMSource>()) {
     return [[MLNRasterDEMSource alloc] initWithRawSource:rasterDEMSource stylable:self.stylable];
   } else if (auto imageSource = rawSource->as<mbgl::style::ImageSource>()) {
     return [[MLNImageSource alloc] initWithRawSource:imageSource stylable:self.stylable];
+#endif
   } else {
     return [[MLNSource alloc] initWithRawSource:rawSource stylable:self.stylable];
   }

@@ -612,7 +612,12 @@ MLN_CORE_SOURCE = [
     "src/mbgl/util/version.cpp",
     "src/mbgl/util/version.hpp",
     "src/mbgl/util/work_request.cpp",
-] + select({
+]
+
+# Rust-color srcs as a separate constant so MLN_CORE_SOURCE stays a plain
+# iterable list (Starlark can't list-comprehension over a SelectorList).
+# Append this to a target's `srcs` alongside MLN_CORE_SOURCE.
+MLN_CORE_SOURCE_COLOR_SELECT = select({
     "//:rust": [
         "src/mbgl/util/color.rs.cpp",
     ],

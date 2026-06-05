@@ -9,13 +9,19 @@ load(
     "bazel/files.bzl",
     "MLN_DARWIN_OBJCPP_HEADERS",
     "MLN_DARWIN_OBJC_HEADERS",
+    "MLN_DARWIN_OBJC_HEADERS_LIGHT",
     "MLN_DARWIN_PRIVATE_HEADERS",
+    "MLN_DARWIN_PRIVATE_HEADERS_LIGHT",
     "MLN_DARWIN_PUBLIC_OBJCPP_CUSTOM_DRAWABLE_SOURCE",
     "MLN_DARWIN_PUBLIC_OBJCPP_SOURCE",
+    "MLN_DARWIN_PUBLIC_OBJCPP_SOURCE_LIGHT",
     "MLN_DARWIN_PUBLIC_OBJC_SOURCE",
     "MLN_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_GENERATED_DARWIN_STYLE_HEADERS_LIGHT",
     "MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS_LIGHT",
     "MLN_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_GENERATED_DARWIN_STYLE_SOURCE_LIGHT",
     "MLN_GENERATED_DARWIN_TEST_CODE",
 )
 
@@ -70,6 +76,50 @@ filegroup(
 filegroup(
     name = "generated_style_public_hdrs",
     srcs = MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS,
+    visibility = ["//visibility:public"],
+)
+
+# ----- Light variant filegroups -------------------------------------------
+
+filegroup(
+    name = "darwin_private_hdrs_light",
+    srcs = MLN_DARWIN_PRIVATE_HEADERS_LIGHT,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "darwin_objc_hdrs_light",
+    srcs = MLN_DARWIN_OBJC_HEADERS_LIGHT,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "darwin_objcpp_srcs_light",
+    srcs = MLN_DARWIN_PUBLIC_OBJCPP_SOURCE_LIGHT,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "generated_style_srcs_light",
+    srcs = MLN_GENERATED_DARWIN_STYLE_SOURCE_LIGHT,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "generated_style_hdrs_light",
+    srcs = MLN_GENERATED_DARWIN_STYLE_HEADERS_LIGHT,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "generated_style_public_hdrs_light",
+    srcs = MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS_LIGHT,
+    visibility = ["//visibility:public"],
+)
+
+filegroup(
+    name = "generated_code_production_light",
+    srcs = MLN_GENERATED_DARWIN_STYLE_SOURCE_LIGHT + MLN_GENERATED_DARWIN_STYLE_HEADERS_LIGHT,
     visibility = ["//visibility:public"],
 )
 
@@ -205,6 +255,21 @@ cc_library(
     visibility = ["//visibility:public"],
 )
 
+# Light variant — same shape, filtered file lists.
+cc_library(
+    name = "darwin-generated-style-artifacts-light",
+    srcs = [
+        ":darwin_objc_hdrs_light",
+        ":darwin_objcpp_hdrs",
+        ":darwin_private_hdrs_light",
+        ":generated_code_production_light",
+    ],
+    hdrs = [
+        ":generated_style_hdrs_light",
+    ],
+    visibility = ["//visibility:public"],
+)
+
 # Objc files for the iOS source
 objc_library(
     name = "darwin-objc",
@@ -275,6 +340,72 @@ objc_library(
     ],
 )
 
+# Light variants — identical sources, but link against //:mbgl-core-light.
+objc_library(
+    name = "darwin-objc-light",
+    srcs = [
+        "core/native_apple_interface.m",
+    ],
+    hdrs = [
+        "include/mbgl/interface/native_apple_interface.h",
+        "include/mbgl/util/image+MLNAdditions.hpp",
+    ],
+    copts = WARNING_FLAGS["ios"] + MAPLIBRE_FLAGS + [
+        "-fmodules",
+    ],
+    defines = [
+        "GLES_SILENCE_DEPRECATION=1",
+        "GL_SILENCE_DEPRECATION=1",
+    ],
+    includes = [
+        "include",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:mbgl-core-light",
+        "//platform/default:mbgl-default-light",
+    ],
+)
+
+objc_library(
+    name = "darwin-objcpp-light",
+    srcs = [
+        "core/collator.mm",
+        "core/http_file_source.mm",
+        "core/image.mm",
+        "core/local_glyph_rasterizer.mm",
+        "core/logging_nslog.mm",
+        "core/nsthread.mm",
+        "core/number_format.mm",
+        "core/string_nsstring.mm",
+        "src/CFHandle.hpp",
+    ],
+    hdrs = [
+        "include/mbgl/interface/native_apple_interface.h",
+        "include/mbgl/util/image+MLNAdditions.hpp",
+    ],
+    copts = CPP_FLAGS + MAPLIBRE_FLAGS + [
+        "-fcxx-modules",
+        "-fmodules",
+        "-Wno-vla-extension",
+        "-Wno-gnu-conditional-omitted-operand",
+    ],
+    includes = [
+        "include",
+        "src",
+    ],
+    sdk_frameworks = [
+        "CoreText",
+        "ImageIO",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "darwin-objc-light",
+        "//:mbgl-core-light",
+        "//platform/default:mbgl-default-light",
+    ],
+)
+
 # Loop files for iOS.
 objc_library(
     name = "darwin-loop",
@@ -300,6 +431,29 @@ objc_library(
     visibility = ["//visibility:public"],
     deps = [
         "//:mbgl-core",
+    ],
+)
+
+# Light variant of darwin-loop — Metal only.
+objc_library(
+    name = "darwin-loop-light",
+    srcs = [
+        "core/async_task.cpp",
+        "core/run_loop.cpp",
+        "core/timer.cpp",
+    ],
+    copts = CPP_FLAGS + MAPLIBRE_FLAGS,
+    defines = [
+        "GLES_SILENCE_DEPRECATION=1",
+        "GL_SILENCE_DEPRECATION=1",
+    ],
+    sdk_frameworks = [
+        "SystemConfiguration",
+        "Metal",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//:mbgl-core-light",
     ],
 )
 

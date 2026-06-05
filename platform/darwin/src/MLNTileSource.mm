@@ -2,7 +2,9 @@
 
 #import "MLNAttributionInfo_Private.h"
 #import "MLNGeometry_Private.h"
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNRasterDEMSource.h"
+#endif
 #import "MLNVectorTileSource.h"
 #import "NSString+MLNAdditions.h"
 #import "NSValue+MLNAdditions.h"
@@ -146,6 +148,7 @@ mbgl::Tileset MLNTileSetFromTileURLTemplates(
     }
   }
 
+#if !defined(MLN_LIGHT_BUILD)
   NSNumber *encodingNumber = options[MLNTileSourceOptionDEMEncoding];
   if (encodingNumber) {
     if (![encodingNumber isKindOfClass:[NSValue class]]) {
@@ -165,6 +168,9 @@ mbgl::Tileset MLNTileSetFromTileURLTemplates(
   }
 
   encodingNumber = options[MLNVectorTileSourceOptionEncoding];
+#else
+  NSNumber *encodingNumber = options[MLNVectorTileSourceOptionEncoding];
+#endif
   if (encodingNumber) {
     if (![encodingNumber isKindOfClass:[NSValue class]]) {
       [NSException
