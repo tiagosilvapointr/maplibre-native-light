@@ -68,9 +68,14 @@ load(
 # the factory is gone they're unreferenced and safe to omit.
 
 _LIGHT_EXCLUDED_GENERATED_STYLE_SOURCE = [
-    # We KEEP the *_layer.cpp / *_layer_properties.cpp files because the
-    # JSON style parser still instantiates the style::Layer subclass
-    # when reading a "<layer-type>" entry. They are small (just data).
+    # With the heatmap/location-indicator factory + impl + render-layer
+    # dropped, nothing constructs the style::Layer subclass, so its .cpp
+    # + properties .cpp can also go. Only style_impl.cpp #includes the
+    # header — that compiles fine without the .cpp.
+    "src/mbgl/style/layers/heatmap_layer.cpp",
+    "src/mbgl/style/layers/heatmap_layer_properties.cpp",
+    "src/mbgl/style/layers/location_indicator_layer.cpp",
+    "src/mbgl/style/layers/location_indicator_layer_properties.cpp",
 ]
 
 _LIGHT_EXCLUDED_CORE_SOURCE = [
@@ -87,6 +92,10 @@ _LIGHT_EXCLUDED_CORE_SOURCE = [
     "src/mbgl/renderer/layers/render_hillshade_layer.cpp",
     "src/mbgl/renderer/layers/render_color_relief_layer.cpp",
     "src/mbgl/renderer/layers/render_location_indicator_layer.cpp",
+    # Heatmap bucket — sole user was render_heatmap_layer (dropped) plus
+    # RenderStaticData::heatmapTextureVertices (now gated by
+    # MBGL_LAYER_HEATMAP_DISABLE_ALL in render_static_data.cpp).
+    "src/mbgl/renderer/buckets/heatmap_bucket.cpp",
 ]
 
 _LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
@@ -104,7 +113,22 @@ _LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
     "src/mbgl/renderer/layers/render_custom_drawable_layer.cpp",
 ]
 
-_LIGHT_EXCLUDED_DRAWABLES_MTL_SOURCE = []
+_LIGHT_EXCLUDED_DRAWABLES_MTL_SOURCE = [
+    # Once the matching render-layer + tweaker .cpp's are dropped, nothing
+    # outside these files references `ShaderSource<BuiltIn::XShader>`, so
+    # they're safe to drop. RasterShader is the only one still pulled in
+    # (RasterLayer rendering is kept — see notes above).
+    "src/mbgl/shaders/mtl/heatmap.cpp",
+    "src/mbgl/shaders/mtl/heatmap_texture.cpp",
+    "src/mbgl/shaders/mtl/hillshade.cpp",
+    "src/mbgl/shaders/mtl/hillshade_prepare.cpp",
+    "src/mbgl/shaders/mtl/color_relief.cpp",
+    "src/mbgl/shaders/mtl/location_indicator.cpp",
+    # Only consumed by the now-dropped custom_drawable_layer pipeline.
+    "src/mbgl/shaders/mtl/custom_geometry.cpp",
+    "src/mbgl/shaders/mtl/custom_symbol_icon.cpp",
+    "src/mbgl/shaders/mtl/widevector.cpp",
+]
 
 MLN_CORE_SOURCE_LIGHT = [f for f in MLN_CORE_SOURCE if f not in _LIGHT_EXCLUDED_CORE_SOURCE]
 MLN_CORE_HEADERS_LIGHT = MLN_CORE_HEADERS

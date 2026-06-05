@@ -195,9 +195,13 @@ apple_xcframework(
     name = "MapLibreLight.dynamic",
     bundle_id = "com.maplibre.maplibrelight",
     bundle_name = "MapLibre",
+    # Stripped resources: no Images.xcassets (compass / default marker /
+    # Mapbox & MapLibre attribution icons), no localized .lproj folders.
+    # Base.lproj is kept so UI strings (accessibility labels, attribution
+    # text, etc.) still resolve to English. Consumers that show the
+    # compass / attribution UI will see blank icons.
     data = glob([
-        "resources/*.lproj/**",
-        "resources/*.xcassets/**",
+        "resources/Base.lproj/**",
     ]) + [
         "PrivacyInfo.xcprivacy",
         "resources/metal-cpp-ignores.txt",

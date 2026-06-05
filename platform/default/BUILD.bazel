@@ -215,7 +215,8 @@ cc_library(
         "src/mbgl/util/compression.cpp",
         "src/mbgl/util/filesystem.cpp",
         "src/mbgl/util/monotonic_timer.cpp",
-        "src/mbgl/util/png_writer.cpp",
+        # png_writer.cpp dropped — only used by encodePNG (snapshot output,
+        # not by the live map). iOS image decode goes through Core Graphics.
         "src/mbgl/util/thread_local.cpp",
     ],
     hdrs = [

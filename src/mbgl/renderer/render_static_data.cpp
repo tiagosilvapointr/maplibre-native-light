@@ -38,6 +38,7 @@ gfx::VertexVector<RasterLayoutVertex> RenderStaticData::rasterVertices() {
     return vertices;
 }
 
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
 gfx::VertexVector<HeatmapTextureLayoutVertex> RenderStaticData::heatmapTextureVertices() {
     gfx::VertexVector<HeatmapTextureLayoutVertex> vertices;
     vertices.emplace_back(HeatmapBucket::textureVertex({0, 0}));
@@ -46,6 +47,7 @@ gfx::VertexVector<HeatmapTextureLayoutVertex> RenderStaticData::heatmapTextureVe
     vertices.emplace_back(HeatmapBucket::textureVertex({1, 1}));
     return vertices;
 }
+#endif
 
 gfx::VertexVector<FillExtrusionStaticVertex> RenderStaticData::fillExtrusionVertices() {
     gfx::VertexVector<HeatmapTextureLayoutVertex> vertices;

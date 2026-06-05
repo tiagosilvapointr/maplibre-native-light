@@ -108,8 +108,10 @@ void RendererBackend::initShaders(gfx::ShaderRegistry& shaders, const ProgramPar
                   shaders::BuiltIn::ClippingMaskProgram,
                   shaders::BuiltIn::CollisionBoxShader,
                   shaders::BuiltIn::CollisionCircleShader,
+#if !defined(MLN_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL)
                   shaders::BuiltIn::CustomGeometryShader,
                   shaders::BuiltIn::CustomSymbolIconShader,
+#endif
                   shaders::BuiltIn::DebugShader,
                   shaders::BuiltIn::FillShader,
                   shaders::BuiltIn::FillOutlineShader,
@@ -120,22 +122,34 @@ void RendererBackend::initShaders(gfx::ShaderRegistry& shaders, const ProgramPar
                   shaders::BuiltIn::FillExtrusionInstancedShader,
                   shaders::BuiltIn::FillExtrusionPatternShader,
                   shaders::BuiltIn::FillExtrusionPatternInstancedShader,
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
                   shaders::BuiltIn::HeatmapShader,
                   shaders::BuiltIn::HeatmapTextureShader,
+#endif
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
                   shaders::BuiltIn::HillshadeShader,
                   shaders::BuiltIn::HillshadePrepareShader,
+#endif
+#if !defined(MBGL_LAYER_COLOR_RELIEF_DISABLE_ALL)
                   shaders::BuiltIn::ColorReliefShader,
+#endif
                   shaders::BuiltIn::LineShader,
                   shaders::BuiltIn::LineGradientShader,
                   shaders::BuiltIn::LineSDFShader,
                   shaders::BuiltIn::LinePatternShader,
+#if !defined(MBGL_LAYER_LOCATION_INDICATOR_DISABLE_ALL)
                   shaders::BuiltIn::LocationIndicatorShader,
                   shaders::BuiltIn::LocationIndicatorTexturedShader,
+#endif
                   shaders::BuiltIn::RasterShader,
                   shaders::BuiltIn::SymbolIconShader,
                   shaders::BuiltIn::SymbolSDFShader,
-                  shaders::BuiltIn::SymbolTextAndIconShader,
-                  shaders::BuiltIn::WideVectorShader>(shaders, programParameters);
+                  shaders::BuiltIn::SymbolTextAndIconShader
+#if !defined(MLN_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL)
+                  ,
+                  shaders::BuiltIn::WideVectorShader
+#endif
+                  >(shaders, programParameters);
 }
 
 } // namespace mtl
