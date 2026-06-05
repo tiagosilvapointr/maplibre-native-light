@@ -43,36 +43,66 @@ load(
 # in `hdrs` (cheap to keep, allows code that #includes them but never calls
 # into them to still compile); only the matching .cpp/source files are
 # excluded.
-# NOTE: First-pass scope — the C++ core is left intact.
-#
-# We initially tried to drop the implementations of layer types not used
-# by the light public API (heatmap, hillshade, color-relief,
-# location-indicator, custom-drawable, raster, raster-dem, image source).
-# That broke linking for many reasons:
+# Couplings we can NOT untangle in this first pass (notes for future work):
 #
 #   * `src/mbgl/style/source.cpp` constructs `ImageSource` / `RasterSource`
-#     / `RasterDEMSource` directly when parsing JSON.
-#   * `mbgl::OfflineDownload` calls `ImageSource::getURL()`.
+#     / `RasterDEMSource` directly when parsing JSON → keep their .cpp
+#     impls in the light core.
+#   * `mbgl::OfflineDownload` calls `ImageSource::getURL()` → same.
 #   * `mtl::renderer_backend` instantiates a `ShaderSource<BuiltIn>` for
-#     every entry in the BuiltIn enum, so any dropped Metal shader .cpp
-#     leaves an undefined symbol.
+#     every entry in the BuiltIn enum → keep all Metal shader .cpp files.
 #   * Generic style/conversion code references the enum-string converters
 #     defined in `hillshade_layer.cpp` (HillshadeMethodType) and
-#     `color_relief_layer.cpp` (vector<Color>).
-#   * `RasterDEMTile` uses `HillshadeBucket`.
+#     `color_relief_layer.cpp` (vector<Color>) → keep those generated
+#     style .cpp files.
+#   * `RasterDEMTile` uses `HillshadeBucket` → keep hillshade_bucket.cpp.
+#   * `RenderStaticData::heatmapTextureVertices()` uses
+#     `HeatmapBucket::textureVertex` → keep heatmap_bucket.cpp.
 #
-# Resolving these would require splitting source-impl headers, gating the
-# JSON parser + BuiltIn enum + offline downloader. Saving that for later.
-#
-# For now, MapLibreLight ships with the same C++ core as the standard
-# MapLibre target. The size win comes from the Obj-C wrapper trimming
-# (dropped headers + `.mm` files for raster/hillshade/heatmap/etc.) and
-# the smaller public API surface in the xcframework.
-_LIGHT_EXCLUDED_GENERATED_STYLE_SOURCE = []
+# What we CAN drop safely: the render-layer .cpp + the LayerFactory .cpp
+# + the layer impl + the drawable tweakers, for layer types whose
+# `MBGL_LAYER_*_DISABLE_ALL` macro is defined in the light build.
+# The factory class is referenced only from `layer_manager.cpp`
+# (already gated) and from `MLNStyleLayerManager.mm` (also gated).
+# RenderLayer subclasses are constructed only by their factory, so once
+# the factory is gone they're unreferenced and safe to omit.
 
-_LIGHT_EXCLUDED_CORE_SOURCE = []
+_LIGHT_EXCLUDED_GENERATED_STYLE_SOURCE = [
+    # We KEEP the *_layer.cpp / *_layer_properties.cpp files because the
+    # JSON style parser still instantiates the style::Layer subclass
+    # when reading a "<layer-type>" entry. They are small (just data).
+]
 
-_LIGHT_EXCLUDED_DRAWABLES_SOURCE = []
+_LIGHT_EXCLUDED_CORE_SOURCE = [
+    # Layer impls — only referenced by the corresponding factory.cpp
+    "src/mbgl/style/layers/heatmap_layer_impl.cpp",
+    "src/mbgl/style/layers/location_indicator_layer_impl.cpp",
+    # Layer factories — only registered from layer_manager.cpp (gated)
+    "src/mbgl/layermanager/heatmap_layer_factory.cpp",
+    "src/mbgl/layermanager/hillshade_layer_factory.cpp",
+    "src/mbgl/layermanager/color_relief_layer_factory.cpp",
+    "src/mbgl/layermanager/location_indicator_layer_factory.cpp",
+    # Render layers — only constructed via their factory
+    "src/mbgl/renderer/layers/render_heatmap_layer.cpp",
+    "src/mbgl/renderer/layers/render_hillshade_layer.cpp",
+    "src/mbgl/renderer/layers/render_color_relief_layer.cpp",
+    "src/mbgl/renderer/layers/render_location_indicator_layer.cpp",
+]
+
+_LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
+    # Tweakers — only referenced by their RenderLayer
+    "src/mbgl/renderer/layers/color_relief_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/heatmap_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/heatmap_texture_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/hillshade_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/hillshade_prepare_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/location_indicator_layer_tweaker.cpp",
+    # Custom-drawable experimental layer (MLN_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL)
+    "src/mbgl/style/layers/custom_drawable_layer.cpp",
+    "src/mbgl/layermanager/custom_drawable_layer_factory.cpp",
+    "src/mbgl/style/layers/custom_drawable_layer_impl.cpp",
+    "src/mbgl/renderer/layers/render_custom_drawable_layer.cpp",
+]
 
 _LIGHT_EXCLUDED_DRAWABLES_MTL_SOURCE = []
 

@@ -21,7 +21,9 @@ FOUNDATION_EXPORT MLN_EXPORT const unsigned char MapboxVersionString[];
 #import "MLNCluster.h"
 #import "MLNCompassButton.h"
 #import "MLNCompassDirectionFormatter.h"
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNComputedShapeSource.h"
+#endif
 #import "MLNCoordinateFormatter.h"
 #if !defined(MLN_LIGHT_BUILD)
 #import "MLNCustomDrawableStyleLayer.h"
@@ -44,7 +46,9 @@ FOUNDATION_EXPORT MLN_EXPORT const unsigned char MapboxVersionString[];
 #import "MLNLoggingConfiguration.h"
 #import "MLNMapCamera.h"
 #import "MLNMapProjection.h"
+#if !defined(MLN_LIGHT_BUILD)
 #import "MLNMapSnapshotter.h"
+#endif
 #import "MLNMapView+IBAdditions.h"
 #import "MLNMapView.h"
 #import "MLNMapViewDelegate.h"

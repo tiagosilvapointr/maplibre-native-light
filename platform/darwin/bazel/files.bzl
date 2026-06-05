@@ -278,21 +278,27 @@ _LIGHT_EXCLUDED_GENERATED_STYLE_HEADERS = [
 ]
 
 _LIGHT_EXCLUDED_DARWIN_OBJC_HEADERS = [
+    "src/MLNComputedShapeSource.h",
     "src/MLNCustomStyleLayer.h",
     "src/MLNCustomDrawableStyleLayer.h",
     "src/MLNImageSource.h",
+    "src/MLNMapSnapshotter.h",
     "src/MLNRasterDEMSource.h",
     "src/MLNRasterTileSource.h",
 ]
 
 _LIGHT_EXCLUDED_DARWIN_PRIVATE_HEADERS = [
+    "src/MLNComputedShapeSource_Private.h",
     "src/MLNCustomStyleLayer_Private.h",
+    "src/MLNMapSnapshotter_Private.h",
     "src/MLNRasterTileSource_Private.h",
 ]
 
 _LIGHT_EXCLUDED_DARWIN_PUBLIC_OBJCPP_SOURCE = [
+    "src/MLNComputedShapeSource.mm",
     "src/MLNCustomStyleLayer.mm",
     "src/MLNImageSource.mm",
+    "src/MLNMapSnapshotter.mm",
     "src/MLNRasterDEMSource.mm",
     "src/MLNRasterTileSource.mm",
 ]

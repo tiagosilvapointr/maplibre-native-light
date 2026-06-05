@@ -216,37 +216,31 @@ cc_library(
            MLN_CORE_SOURCE_COLOR_SELECT +
            MLN_GENERATED_SHADER_SOURCE +
            MLN_GENERATED_STYLE_SOURCE_LIGHT +
-           MLN_DRAWABLES_SOURCE_LIGHT + MLN_DRAWABLES_MTL_SOURCE_LIGHT + select({
-        "//:harfbuzz_text_shaping": MLN_SHAPING_HARFBUZZ_SRCS,
-        "//conditions:default": [],
-    }),
+           MLN_DRAWABLES_SOURCE_LIGHT + MLN_DRAWABLES_MTL_SOURCE_LIGHT,
     hdrs = MLN_LAYER_PLUGIN_HEADERS + MLN_CORE_HEADERS_LIGHT +
            MLN_DRAWABLES_HEADERS_LIGHT + MLN_DRAWABLES_MTL_HEADERS_LIGHT,
     copts = CPP_FLAGS + MAPLIBRE_FLAGS,
+    # Light core is Metal-only and uses legacy text shaping (no HarfBuzz)
+    # to drop several MB of binary. Complex-script rendering (Indic,
+    # Arabic, Thai) won't reach the same quality as the standard build.
     defines = [
         "MLN_RENDER_BACKEND_METAL=1",
     ] + LIGHT_DISABLED_LAYER_DEFINES + select({
         "@platforms//os:ios": ["GLES_SILENCE_DEPRECATION=1"],
-        "//conditions:default": [],
-    }) + select({
-        "//:harfbuzz_text_shaping": ["MLN_TEXT_SHAPING_HARFBUZZ=1"],
         "//conditions:default": [],
     }),
     includes = [
         "include",
         "src",
         "vendor/metal-cpp",
-    ] + select({
-        "//:harfbuzz_text_shaping": [
-            "vendor/freetype/include",
-            "vendor/harfbuzz/src",
-        ],
-        "//conditions:default": [],
-    }),
+    ],
     local_defines = [
         r"MLN_VERSION_REV=\"standalone\"",
     ],
     visibility = ["//visibility:public"],
+    # pmtiles vendor dep dropped — mbgl-default-light uses the pmtiles
+    # stub file source and the core itself only references the header
+    # (forward decls / constants).
     deps = [
         ":mbgl-core-generated-private-artifacts",
         ":mbgl-core-generated-public-artifacts",
@@ -257,7 +251,6 @@ cc_library(
         "//vendor:maplibre-native-base",
         "//vendor:metal-cpp",
         "//vendor:parsedate",
-        "//vendor:pmtiles",
         "//vendor:polylabel",
         "//vendor:protozero",
         "//vendor:rapidjson",
@@ -274,12 +267,6 @@ cc_library(
         ],
         "@platforms//os:osx": [
             "//vendor:icu",
-        ],
-        "//conditions:default": [],
-    }) + select({
-        ":harfbuzz_text_shaping": [
-            "//vendor:freetype",
-            "//vendor:harfbuzz",
         ],
         "//conditions:default": [],
     }) + select({

@@ -182,16 +182,18 @@ cc_library(
 )
 
 # Light variant of mbgl-default — iOS Metal only, links against
-# mbgl-core-light and darwin-loop-light. Same source list (storage,
-# headless backend, snapshotter, etc.) since none of those files
-# reference dropped layer types directly.
+# mbgl-core-light and darwin-loop-light. Drops:
+#   * map_snapshotter.cpp + gfx/headless_frontend.cpp (only used by the
+#     dropped MLNMapSnapshotter Obj-C wrapper)
+#   * mtl/headless_backend.cpp (only the snapshotter pulls Metal headless
+#     rendering; the live MLNMapView uses the on-screen Metal layer).
+# gfx/headless_backend.cpp is KEPT — it carries the definition of the
+# `Backend::enableGPUExpressionEval` static and is referenced by
+# line_layer_tweaker.cpp.
 cc_library(
     name = "mbgl-default-light",
     srcs = [
         "src/mbgl/gfx/headless_backend.cpp",
-        "src/mbgl/gfx/headless_frontend.cpp",
-        "src/mbgl/map/map_snapshotter.cpp",
-        "src/mbgl/mtl/headless_backend.cpp",
         "src/mbgl/platform/time.cpp",
         "src/mbgl/storage/asset_file_source.cpp",
         "src/mbgl/storage/database_file_source.cpp",
@@ -205,7 +207,9 @@ cc_library(
         "src/mbgl/storage/offline_database.cpp",
         "src/mbgl/storage/offline_download.cpp",
         "src/mbgl/storage/online_file_source.cpp",
-        "src/mbgl/storage/pmtiles_file_source.cpp",
+        # Stub avoids pulling in the pmtiles vendor lib + boost::spirit.
+        # pmtiles:// URLs will be rejected at runtime.
+        "src/mbgl/storage/pmtiles_file_source_stub.cpp",
         "src/mbgl/storage/sqlite3.cpp",
         "src/mbgl/text/bidi.cpp",
         "src/mbgl/util/compression.cpp",
@@ -216,9 +220,6 @@ cc_library(
     ],
     hdrs = [
         "include/mbgl/gfx/headless_backend.hpp",
-        "include/mbgl/gfx/headless_frontend.hpp",
-        "include/mbgl/map/map_snapshotter.hpp",
-        "include/mbgl/mtl/headless_backend.hpp",
         "include/mbgl/storage/file_source_request.hpp",
         "include/mbgl/storage/local_file_request.hpp",
         "include/mbgl/storage/merge_sideloaded.hpp",
