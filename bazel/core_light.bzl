@@ -75,11 +75,18 @@ _LIGHT_EXCLUDED_GENERATED_STYLE_SOURCE = [
     # fine without the .cpp.
     "src/mbgl/style/layers/heatmap_layer.cpp",
     "src/mbgl/style/layers/heatmap_layer_properties.cpp",
+    # Hillshade/raster properties — only referenced from the corresponding
+    # _impl.cpp / render-layer.cpp, both excluded below. The matching
+    # _layer.cpp files are KEPT (HillshadeMethodType / generic conversion).
+    "src/mbgl/style/layers/hillshade_layer_properties.cpp",
+    "src/mbgl/style/layers/raster_layer_properties.cpp",
 ]
 
 _LIGHT_EXCLUDED_CORE_SOURCE = [
     # Layer impls — only referenced by the corresponding factory.cpp
     "src/mbgl/style/layers/heatmap_layer_impl.cpp",
+    "src/mbgl/style/layers/hillshade_layer_impl.cpp",
+    "src/mbgl/style/layers/raster_layer_impl.cpp",
     "src/mbgl/style/layers/location_indicator_layer_impl.cpp",
     # Layer factories — only registered from layer_manager.cpp (gated)
     "src/mbgl/layermanager/heatmap_layer_factory.cpp",
@@ -91,6 +98,7 @@ _LIGHT_EXCLUDED_CORE_SOURCE = [
     "src/mbgl/renderer/layers/render_hillshade_layer.cpp",
     "src/mbgl/renderer/layers/render_color_relief_layer.cpp",
     "src/mbgl/renderer/layers/render_location_indicator_layer.cpp",
+    "src/mbgl/renderer/layers/render_raster_layer.cpp",
     # Heatmap bucket — only consumer was render_heatmap_layer.cpp (dropped
     # above). RenderStaticData::heatmapTextureVertices() still compiles
     # because the only HeatmapBucket symbol it touches is the inline
@@ -106,6 +114,7 @@ _LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
     "src/mbgl/renderer/layers/hillshade_layer_tweaker.cpp",
     "src/mbgl/renderer/layers/hillshade_prepare_layer_tweaker.cpp",
     "src/mbgl/renderer/layers/location_indicator_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/raster_layer_tweaker.cpp",
     # Custom-drawable experimental layer (MLN_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL)
     "src/mbgl/style/layers/custom_drawable_layer.cpp",
     "src/mbgl/layermanager/custom_drawable_layer_factory.cpp",
@@ -114,12 +123,16 @@ _LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
 ]
 
 _LIGHT_EXCLUDED_DRAWABLES_MTL_SOURCE = [
-    # Heatmap Metal shaders — registerTypes<...> in mtl/renderer_backend.cpp
-    # gates the corresponding `BuiltIn::Heatmap*Shader` entries with
-    # `MBGL_LAYER_HEATMAP_DISABLE_ALL`, so the symbols ShaderSource<...>::vertex
-    # / ::fragment defined in these .cpp files are no longer referenced.
+    # Heatmap / Hillshade / Raster Metal shaders — registerTypes<...> in
+    # mtl/renderer_backend.cpp gates the corresponding `BuiltIn::*Shader`
+    # entries with `MBGL_LAYER_*_DISABLE_ALL`, so the symbols
+    # ShaderSource<...>::vertex / ::fragment defined in these .cpp files
+    # are no longer referenced.
     "src/mbgl/shaders/mtl/heatmap.cpp",
     "src/mbgl/shaders/mtl/heatmap_texture.cpp",
+    "src/mbgl/shaders/mtl/hillshade.cpp",
+    "src/mbgl/shaders/mtl/hillshade_prepare.cpp",
+    "src/mbgl/shaders/mtl/raster.cpp",
 ]
 
 MLN_CORE_SOURCE_LIGHT = [f for f in MLN_CORE_SOURCE if f not in _LIGHT_EXCLUDED_CORE_SOURCE]
