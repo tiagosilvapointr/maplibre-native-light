@@ -1,0 +1,63 @@
+load("@darwin_config//:config.bzl", "BUNDLE_ID_PREFIX")
+load("@rules_apple//apple:ios.bzl", "ios_application")
+load("@rules_cc//cc:defs.bzl", "objc_library")
+load("@rules_apple//apple:versioning.bzl", "apple_bundle_version")
+load("//bazel:flags.bzl", "MAPLIBRE_FLAGS", "WARNING_FLAGS")
+load("//platform/ios/bazel:macros.bzl", "info_plist")
+load("//platform/ios/bazel:provisioning.bzl", "configure_device_profiles")
+
+configure_device_profiles()
+
+info_plist(
+    name = "info_app_light_plist",
+    out = "Info-light.plist",
+    base_info_plist = "Info.plist",
+)
+
+# Minimal debug Obj-C app that exercises //platform:ios-sdk-light. The view
+# controller loads `plugin-style.json` from the bundle and logs the
+# MLNMapViewDelegate signals so we can see exactly where tile loading goes
+# wrong against the light SDK.
+objc_library(
+    name = "iosapp-light-srcs",
+    srcs = [
+        "LightAppDelegate.h",
+        "LightAppDelegate.m",
+        "LightViewController.h",
+        "LightViewController.m",
+        "main.m",
+    ],
+    copts = MAPLIBRE_FLAGS + WARNING_FLAGS["ios"],
+    sdk_frameworks = [
+        "UIKit",
+        "MetalKit",
+    ],
+    deps = [
+        "//platform:ios-sdk-light",
+    ],
+)
+
+apple_bundle_version(
+    name = "app_light_version",
+    build_version = "1.0.0",
+)
+
+ios_application(
+    name = "AppLight",
+    bundle_id = "{}.maplibre.app.light".format(BUNDLE_ID_PREFIX),
+    families = [
+        "iphone",
+        "ipad",
+    ],
+    infoplists = ["info_app_light_plist"],
+    minimum_os_version = "12.0",
+    provisioning_profile = "xcode_profile",
+    resources = [
+        "plugin-style.json",
+    ],
+    version = ":app_light_version",
+    visibility = ["//visibility:public"],
+    deps = [
+        ":iosapp-light-srcs",
+    ],
+)

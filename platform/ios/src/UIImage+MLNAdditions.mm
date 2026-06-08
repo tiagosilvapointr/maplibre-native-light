@@ -96,12 +96,14 @@ BOOL MLNEdgeInsetsIsZero(UIEdgeInsets edgeInsets) {
                               inBundle:[NSBundle mgl_frameworkBundle]
          compatibleWithTraitCollection:nil];
 
+#if !defined(MLN_LIGHT_BUILD)
   if (!image) {
     [NSException
          raise:MLNResourceNotFoundException
         format:@"The resource named “%@” could not be found in the Mapbox framework bundle.",
                imageName];
   }
+#endif
 
   return image;
 }

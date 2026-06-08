@@ -66,6 +66,12 @@
 
 - (UIImage *)compassImage {
   UIImage *scaleImage = [UIImage mgl_resourceImageNamed:@"Compass"];
+  if (!scaleImage) {
+    // Compass image asset is absent (e.g. MapLibreLight build). Returning
+    // nil here gives the compass button a blank image rather than tripping
+    // the UIGraphicsBeginImageContextWithOptions zero-size assertion.
+    return nil;
+  }
   UIGraphicsBeginImageContextWithOptions(scaleImage.size, NO, UIScreen.mainScreen.scale);
   [scaleImage drawInRect:{CGPointZero, scaleImage.size}];
 

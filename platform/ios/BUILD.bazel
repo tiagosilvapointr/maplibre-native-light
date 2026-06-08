@@ -367,6 +367,13 @@ xcodeproj(
             ],
         ),
         top_level_target(
+            "//platform/ios/app-light:AppLight",
+            target_environments = [
+                "simulator",
+                "device",
+            ],
+        ),
+        top_level_target(
             "//platform/ios/app-swift:MapLibreApp",
             target_environments = [
                 "simulator",
