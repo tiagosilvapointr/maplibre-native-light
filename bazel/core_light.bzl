@@ -68,9 +68,13 @@ load(
 # the factory is gone they're unreferenced and safe to omit.
 
 _LIGHT_EXCLUDED_GENERATED_STYLE_SOURCE = [
-    # We KEEP the *_layer.cpp / *_layer_properties.cpp files because the
-    # JSON style parser still instantiates the style::Layer subclass
-    # when reading a "<layer-type>" entry. They are small (just data).
+    # Heatmap is fully removed in MapLibreLight. The factory + impl +
+    # render-layer + tweakers are already excluded below, so nothing
+    # constructs HeatmapLayer at runtime — its generated .cpp + properties
+    # .cpp can also go. style_impl.cpp only `#include`s the header which is
+    # fine without the .cpp.
+    "src/mbgl/style/layers/heatmap_layer.cpp",
+    "src/mbgl/style/layers/heatmap_layer_properties.cpp",
 ]
 
 _LIGHT_EXCLUDED_CORE_SOURCE = [
@@ -87,6 +91,11 @@ _LIGHT_EXCLUDED_CORE_SOURCE = [
     "src/mbgl/renderer/layers/render_hillshade_layer.cpp",
     "src/mbgl/renderer/layers/render_color_relief_layer.cpp",
     "src/mbgl/renderer/layers/render_location_indicator_layer.cpp",
+    # Heatmap bucket — only consumer was render_heatmap_layer.cpp (dropped
+    # above). RenderStaticData::heatmapTextureVertices() still compiles
+    # because the only HeatmapBucket symbol it touches is the inline
+    # `textureVertex()` static defined in heatmap_bucket.hpp.
+    "src/mbgl/renderer/buckets/heatmap_bucket.cpp",
 ]
 
 _LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
@@ -104,7 +113,14 @@ _LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
     "src/mbgl/renderer/layers/render_custom_drawable_layer.cpp",
 ]
 
-_LIGHT_EXCLUDED_DRAWABLES_MTL_SOURCE = []
+_LIGHT_EXCLUDED_DRAWABLES_MTL_SOURCE = [
+    # Heatmap Metal shaders — registerTypes<...> in mtl/renderer_backend.cpp
+    # gates the corresponding `BuiltIn::Heatmap*Shader` entries with
+    # `MBGL_LAYER_HEATMAP_DISABLE_ALL`, so the symbols ShaderSource<...>::vertex
+    # / ::fragment defined in these .cpp files are no longer referenced.
+    "src/mbgl/shaders/mtl/heatmap.cpp",
+    "src/mbgl/shaders/mtl/heatmap_texture.cpp",
+]
 
 MLN_CORE_SOURCE_LIGHT = [f for f in MLN_CORE_SOURCE if f not in _LIGHT_EXCLUDED_CORE_SOURCE]
 MLN_CORE_HEADERS_LIGHT = MLN_CORE_HEADERS

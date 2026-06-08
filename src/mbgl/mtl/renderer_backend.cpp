@@ -120,8 +120,10 @@ void RendererBackend::initShaders(gfx::ShaderRegistry& shaders, const ProgramPar
                   shaders::BuiltIn::FillExtrusionInstancedShader,
                   shaders::BuiltIn::FillExtrusionPatternShader,
                   shaders::BuiltIn::FillExtrusionPatternInstancedShader,
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
                   shaders::BuiltIn::HeatmapShader,
                   shaders::BuiltIn::HeatmapTextureShader,
+#endif
                   shaders::BuiltIn::HillshadeShader,
                   shaders::BuiltIn::HillshadePrepareShader,
                   shaders::BuiltIn::ColorReliefShader,
