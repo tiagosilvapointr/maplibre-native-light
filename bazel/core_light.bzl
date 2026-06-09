@@ -80,6 +80,15 @@ _LIGHT_EXCLUDED_GENERATED_STYLE_SOURCE = [
     # _layer.cpp files are KEPT (HillshadeMethodType / generic conversion).
     "src/mbgl/style/layers/hillshade_layer_properties.cpp",
     "src/mbgl/style/layers/raster_layer_properties.cpp",
+    # raster_layer.cpp / hillshade_layer.cpp host the C++ style-layer
+    # classes (HillshadeLayer, RasterLayer). With the factories, render
+    # layers and source impls all gone, nothing references them.
+    "src/mbgl/style/layers/raster_layer.cpp",
+    "src/mbgl/style/layers/hillshade_layer.cpp",
+    "src/mbgl/style/layers/color_relief_layer.cpp",
+    "src/mbgl/style/layers/color_relief_layer_properties.cpp",
+    "src/mbgl/style/layers/location_indicator_layer.cpp",
+    "src/mbgl/style/layers/location_indicator_layer_properties.cpp",
 ]
 
 _LIGHT_EXCLUDED_CORE_SOURCE = [
@@ -104,6 +113,40 @@ _LIGHT_EXCLUDED_CORE_SOURCE = [
     # because the only HeatmapBucket symbol it touches is the inline
     # `textureVertex()` static defined in heatmap_bucket.hpp.
     "src/mbgl/renderer/buckets/heatmap_bucket.cpp",
+    # Render sources — dispatcher in render_source.cpp is gated for these
+    # SourceType:: cases under MBGL_LAYER_RASTER_DISABLE_ALL /
+    # MBGL_SOURCE_RASTER_DEM_DISABLE_ALL / MBGL_SOURCE_IMAGE_DISABLE_ALL.
+    "src/mbgl/renderer/sources/render_raster_source.cpp",
+    "src/mbgl/renderer/sources/render_raster_dem_source.cpp",
+    "src/mbgl/renderer/sources/render_image_source.cpp",
+    # Style sources — JSON parser (style/conversion/source.cpp) and the
+    # offline downloader (platform/default/.../offline_download.cpp) are
+    # gated for raster / raster-dem / image so these impls have no
+    # remaining static references.
+    "src/mbgl/style/sources/raster_source.cpp",
+    "src/mbgl/style/sources/raster_dem_source.cpp",
+    "src/mbgl/style/sources/image_source.cpp",
+    "src/mbgl/style/sources/image_source_impl.cpp",
+    # Tile types — only consumers are the dropped render_raster_source.cpp
+    # / render_raster_dem_source.cpp.
+    "src/mbgl/tile/raster_tile.cpp",
+    "src/mbgl/tile/raster_tile_worker.cpp",
+    "src/mbgl/tile/raster_dem_tile.cpp",
+    "src/mbgl/tile/raster_dem_tile_worker.cpp",
+    # Raster bucket — only out-of-line consumers were render_raster_layer
+    # (already dropped) and render_image_source (dropped above).
+    # RenderStaticData::rasterVertices() still calls the inline
+    # `RasterBucket::layoutVertex` from the header, which is fine.
+    "src/mbgl/renderer/buckets/raster_bucket.cpp",
+    # Hillshade bucket — only consumers were render_hillshade_layer,
+    # render_color_relief_layer (both dropped), and the raster_dem_tile
+    # files (also dropped above).
+    "src/mbgl/renderer/buckets/hillshade_bucket.cpp",
+    # Hillshade conversions — hosts `Enum<HillshadeMethodType>` and
+    # `vector<Color>` converters. The matching explicit template
+    # instantiations in constant.cpp / property_value.cpp / function.cpp
+    # are gated under MBGL_LAYER_HILLSHADE_DISABLE_ALL.
+    "src/mbgl/style/conversion/hillshade_conversions.cpp",
 ]
 
 _LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
@@ -123,9 +166,10 @@ _LIGHT_EXCLUDED_DRAWABLES_SOURCE = [
 ]
 
 _LIGHT_EXCLUDED_DRAWABLES_MTL_SOURCE = [
-    # Heatmap / Hillshade / Raster Metal shaders — registerTypes<...> in
-    # mtl/renderer_backend.cpp gates the corresponding `BuiltIn::*Shader`
-    # entries with `MBGL_LAYER_*_DISABLE_ALL`, so the symbols
+    # Heatmap / Hillshade / Raster / ColorRelief / LocationIndicator Metal
+    # shaders — registerTypes<...> in mtl/renderer_backend.cpp gates the
+    # corresponding `BuiltIn::*Shader` entries with the matching
+    # `MBGL_LAYER_*_DISABLE_ALL`, so the symbols
     # ShaderSource<...>::vertex / ::fragment defined in these .cpp files
     # are no longer referenced.
     "src/mbgl/shaders/mtl/heatmap.cpp",
@@ -133,6 +177,8 @@ _LIGHT_EXCLUDED_DRAWABLES_MTL_SOURCE = [
     "src/mbgl/shaders/mtl/hillshade.cpp",
     "src/mbgl/shaders/mtl/hillshade_prepare.cpp",
     "src/mbgl/shaders/mtl/raster.cpp",
+    "src/mbgl/shaders/mtl/color_relief.cpp",
+    "src/mbgl/shaders/mtl/location_indicator.cpp",
 ]
 
 MLN_CORE_SOURCE_LIGHT = [f for f in MLN_CORE_SOURCE if f not in _LIGHT_EXCLUDED_CORE_SOURCE]
@@ -171,6 +217,11 @@ LIGHT_DISABLED_LAYER_DEFINES = [
     # in the light build — it is OpenGL-only and the light core is Metal-only.
     "MBGL_LAYER_CUSTOM_DISABLE_ALL=1",
     "MLN_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL=1",
+    # Source-type drops — gate the JSON parser / render dispatcher / offline
+    # downloader so we can also strip the matching `style::source` and
+    # `RenderSource` implementations from the light core.
+    "MBGL_SOURCE_RASTER_DEM_DISABLE_ALL=1",
+    "MBGL_SOURCE_IMAGE_DISABLE_ALL=1",
 ]
 
 # Additional Obj-C-only define so the umbrella header + source factory in

@@ -97,11 +97,13 @@ template std::optional<PropertyValue<AlignmentType>> Converter<PropertyValue<Ali
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
 template std::optional<PropertyValue<CirclePitchScaleType>> Converter<PropertyValue<CirclePitchScaleType>>::operator()(
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 template std::optional<PropertyValue<HillshadeIlluminationAnchorType>>
 Converter<PropertyValue<HillshadeIlluminationAnchorType>>::operator()(conversion::Convertible const&,
                                                                       conversion::Error&,
                                                                       bool,
                                                                       bool) const;
+#endif
 template std::optional<PropertyValue<IconTextFitType>> Converter<PropertyValue<IconTextFitType>>::operator()(
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
 template std::optional<PropertyValue<LightAnchorType>> Converter<PropertyValue<LightAnchorType>>::operator()(
@@ -112,8 +114,10 @@ template std::optional<PropertyValue<LineJoinType>> Converter<PropertyValue<Line
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
 template std::optional<PropertyValue<Position>> Converter<PropertyValue<Position>>::operator()(
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 template std::optional<PropertyValue<RasterResamplingType>> Converter<PropertyValue<RasterResamplingType>>::operator()(
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
+#endif
 template std::optional<PropertyValue<SymbolAnchorType>> Converter<PropertyValue<SymbolAnchorType>>::operator()(
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
 template std::optional<PropertyValue<std::vector<TextVariableAnchorType>>>
@@ -170,10 +174,14 @@ template std::optional<PropertyValue<Rotation>> Converter<PropertyValue<Rotation
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
 
 // Hillshade array and enum types
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL) || !defined(MBGL_LAYER_COLOR_RELIEF_DISABLE_ALL)
 template std::optional<PropertyValue<std::vector<Color>>> Converter<PropertyValue<std::vector<Color>>>::operator()(
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
+#endif
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 template std::optional<PropertyValue<HillshadeMethodType>> Converter<PropertyValue<HillshadeMethodType>>::operator()(
     conversion::Convertible const&, conversion::Error&, bool, bool) const;
+#endif
 
 } // namespace conversion
 } // namespace style

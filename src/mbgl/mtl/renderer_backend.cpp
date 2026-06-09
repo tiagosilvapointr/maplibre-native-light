@@ -128,13 +128,17 @@ void RendererBackend::initShaders(gfx::ShaderRegistry& shaders, const ProgramPar
                   shaders::BuiltIn::HillshadeShader,
                   shaders::BuiltIn::HillshadePrepareShader,
 #endif
+#if !defined(MBGL_LAYER_COLOR_RELIEF_DISABLE_ALL)
                   shaders::BuiltIn::ColorReliefShader,
+#endif
                   shaders::BuiltIn::LineShader,
                   shaders::BuiltIn::LineGradientShader,
                   shaders::BuiltIn::LineSDFShader,
                   shaders::BuiltIn::LinePatternShader,
+#if !defined(MBGL_LAYER_LOCATION_INDICATOR_DISABLE_ALL)
                   shaders::BuiltIn::LocationIndicatorShader,
                   shaders::BuiltIn::LocationIndicatorTexturedShader,
+#endif
 #if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
                   shaders::BuiltIn::RasterShader,
 #endif

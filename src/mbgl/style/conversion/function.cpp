@@ -119,8 +119,10 @@ template std::optional<PropertyExpression<bool>> convertFunctionToExpression<boo
 template std::optional<PropertyExpression<CirclePitchScaleType>> convertFunctionToExpression<CirclePitchScaleType>(
     const Convertible&, Error&, bool);
 template std::optional<PropertyExpression<float>> convertFunctionToExpression<float>(const Convertible&, Error&, bool);
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 template std::optional<PropertyExpression<HillshadeIlluminationAnchorType>>
 convertFunctionToExpression<HillshadeIlluminationAnchorType>(const Convertible&, Error&, bool);
+#endif
 template std::optional<PropertyExpression<IconTextFitType>> convertFunctionToExpression<IconTextFitType>(
     const Convertible&, Error&, bool);
 template std::optional<PropertyExpression<LightAnchorType>> convertFunctionToExpression<LightAnchorType>(
@@ -140,8 +142,10 @@ convertFunctionToExpression<VariableAnchorOffsetCollection>(const Convertible&, 
 template std::optional<PropertyExpression<Position>> convertFunctionToExpression<Position>(const Convertible&,
                                                                                            Error&,
                                                                                            bool);
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 template std::optional<PropertyExpression<RasterResamplingType>> convertFunctionToExpression<RasterResamplingType>(
     const Convertible&, Error&, bool);
+#endif
 template std::optional<PropertyExpression<std::array<float, 2>>> convertFunctionToExpression<std::array<float, 2>>(
     const Convertible&, Error&, bool);
 template std::optional<PropertyExpression<std::array<float, 4>>> convertFunctionToExpression<std::array<float, 4>>(
@@ -167,10 +171,14 @@ template std::optional<PropertyExpression<TextTransformType>> convertFunctionToE
     const Convertible&, Error&, bool);
 template std::optional<PropertyExpression<TranslateAnchorType>> convertFunctionToExpression<TranslateAnchorType>(
     const Convertible&, Error&, bool);
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL) || !defined(MBGL_LAYER_COLOR_RELIEF_DISABLE_ALL)
 template std::optional<PropertyExpression<std::vector<Color>>> convertFunctionToExpression<std::vector<Color>>(
     const Convertible&, Error&, bool);
+#endif
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 template std::optional<PropertyExpression<HillshadeMethodType>> convertFunctionToExpression<HillshadeMethodType>(
     const Convertible&, Error&, bool);
+#endif
 template std::optional<PropertyExpression<Formatted>> convertFunctionToExpression<Formatted>(const Convertible&,
                                                                                              Error&,
                                                                                              bool);

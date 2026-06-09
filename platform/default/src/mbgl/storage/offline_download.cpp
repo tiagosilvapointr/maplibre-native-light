@@ -5,10 +5,16 @@
 #include <mbgl/storage/http_file_source.hpp>
 #include <mbgl/style/parser.hpp>
 #include <mbgl/style/sources/vector_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/style/sources/raster_source.hpp>
+#endif
+#if !defined(MBGL_SOURCE_RASTER_DEM_DISABLE_ALL)
 #include <mbgl/style/sources/raster_dem_source.hpp>
+#endif
 #include <mbgl/style/sources/geojson_source.hpp>
+#if !defined(MBGL_SOURCE_IMAGE_DISABLE_ALL)
 #include <mbgl/style/sources/image_source.hpp>
+#endif
 #include <mbgl/style/conversion/json.hpp>
 #include <mbgl/style/conversion/tileset.hpp>
 #include <mbgl/style/sprite.hpp>
@@ -189,14 +195,18 @@ OfflineRegionStatus OfflineDownload::getStatus() const {
             }
 
             case SourceType::Raster: {
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
                 const auto& rasterSource = *source->as<RasterSource>();
                 handleTiledSource(rasterSource.getURLOrTileset(), rasterSource.getTileSize());
+#endif
                 break;
             }
 
             case SourceType::RasterDEM: {
+#if !defined(MBGL_SOURCE_RASTER_DEM_DISABLE_ALL)
                 const auto& rasterDEMSource = *source->as<RasterDEMSource>();
                 handleTiledSource(rasterDEMSource.getURLOrTileset(), rasterDEMSource.getTileSize());
+#endif
                 break;
             }
 
@@ -209,10 +219,12 @@ OfflineRegionStatus OfflineDownload::getStatus() const {
             }
 
             case SourceType::Image: {
+#if !defined(MBGL_SOURCE_IMAGE_DISABLE_ALL)
                 const auto& imageSource = *source->as<ImageSource>();
                 if (imageSource.getURL()) {
                     result->requiredResourceCount += 1;
                 }
+#endif
                 break;
             }
 
@@ -302,14 +314,18 @@ void OfflineDownload::activateDownload() {
                 }
 
                 case SourceType::Raster: {
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
                     const auto& rasterSource = *source->as<RasterSource>();
                     handleTiledSource(rasterSource.getURLOrTileset(), rasterSource.getTileSize());
+#endif
                     break;
                 }
 
                 case SourceType::RasterDEM: {
+#if !defined(MBGL_SOURCE_RASTER_DEM_DISABLE_ALL)
                     const auto& rasterDEMSource = *source->as<RasterDEMSource>();
                     handleTiledSource(rasterDEMSource.getURLOrTileset(), rasterDEMSource.getTileSize());
+#endif
                     break;
                 }
 
@@ -322,11 +338,13 @@ void OfflineDownload::activateDownload() {
                 }
 
                 case SourceType::Image: {
+#if !defined(MBGL_SOURCE_IMAGE_DISABLE_ALL)
                     const auto& imageSource = *source->as<ImageSource>();
                     auto imageUrl = imageSource.getURL();
                     if (imageUrl && !imageUrl->empty()) {
                         queueResource(Resource::image(*imageUrl));
                     }
+#endif
                     break;
                 }
 

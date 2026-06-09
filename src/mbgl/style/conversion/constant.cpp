@@ -76,16 +76,20 @@ auto Converter<std::vector<T>, typename std::enable_if_t<std::is_enum_v<T>>>::op
 template std::optional<AlignmentType> Converter<AlignmentType>::operator()(const Convertible&, Error&) const;
 template std::optional<CirclePitchScaleType> Converter<CirclePitchScaleType>::operator()(const Convertible&,
                                                                                          Error&) const;
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 template std::optional<HillshadeIlluminationAnchorType> Converter<HillshadeIlluminationAnchorType>::operator()(
     const Convertible&, Error&) const;
 template std::optional<HillshadeMethodType> Converter<HillshadeMethodType>::operator()(const Convertible&,
                                                                                        Error&) const;
+#endif
 template std::optional<IconTextFitType> Converter<IconTextFitType>::operator()(const Convertible&, Error&) const;
 template std::optional<LightAnchorType> Converter<LightAnchorType>::operator()(const Convertible&, Error&) const;
 template std::optional<LineCapType> Converter<LineCapType>::operator()(const Convertible&, Error&) const;
 template std::optional<LineJoinType> Converter<LineJoinType>::operator()(const Convertible&, Error&) const;
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 template std::optional<RasterResamplingType> Converter<RasterResamplingType>::operator()(const Convertible&,
                                                                                          Error&) const;
+#endif
 template std::optional<SymbolAnchorType> Converter<SymbolAnchorType>::operator()(const Convertible&, Error&) const;
 template std::optional<SymbolPlacementType> Converter<SymbolPlacementType>::operator()(const Convertible&,
                                                                                        Error&) const;

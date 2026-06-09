@@ -6,10 +6,16 @@
 #include <mbgl/style/conversion/tileset.hpp>
 #include <mbgl/style/conversion_impl.hpp>
 #include <mbgl/style/sources/geojson_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/style/sources/raster_source.hpp>
+#endif
+#if !defined(MBGL_SOURCE_RASTER_DEM_DISABLE_ALL)
 #include <mbgl/style/sources/raster_dem_source.hpp>
+#endif
 #include <mbgl/style/sources/vector_source.hpp>
+#if !defined(MBGL_SOURCE_IMAGE_DISABLE_ALL)
 #include <mbgl/style/sources/image_source.hpp>
+#endif
 #include <mbgl/util/geo.hpp>
 
 namespace mbgl {
@@ -37,6 +43,7 @@ std::optional<variant<std::string, Tileset>> convertURLOrTileset(const Convertib
     return {std::move(*url)};
 }
 
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 std::optional<std::unique_ptr<Source>> convertRasterSource(const std::string& id,
                                                            const Convertible& value,
                                                            Error& error) {
@@ -58,7 +65,9 @@ std::optional<std::unique_ptr<Source>> convertRasterSource(const std::string& id
 
     return {std::make_unique<RasterSource>(id, std::move(*urlOrTileset), tileSize)};
 }
+#endif // MBGL_LAYER_RASTER_DISABLE_ALL
 
+#if !defined(MBGL_SOURCE_RASTER_DEM_DISABLE_ALL)
 std::optional<std::unique_ptr<Source>> convertRasterDEMSource(const std::string& id,
                                                               const Convertible& value,
                                                               Error& error) {
@@ -87,6 +96,7 @@ std::optional<std::unique_ptr<Source>> convertRasterDEMSource(const std::string&
 
     return {std::make_unique<RasterDEMSource>(id, std::move(*urlOrTileset), tileSize, options)};
 }
+#endif // MBGL_SOURCE_RASTER_DEM_DISABLE_ALL
 
 std::optional<std::unique_ptr<Source>> convertVectorSource(const std::string& id,
                                                            const Convertible& value,
@@ -161,6 +171,7 @@ std::optional<std::unique_ptr<Source>> convertGeoJSONSource(const std::string& i
     return {std::move(result)};
 }
 
+#if !defined(MBGL_SOURCE_IMAGE_DISABLE_ALL)
 std::optional<std::unique_ptr<Source>> convertImageSource(const std::string& id,
                                                           const Convertible& value,
                                                           Error& error) {
@@ -202,6 +213,7 @@ std::optional<std::unique_ptr<Source>> convertImageSource(const std::string& id,
 
     return {std::move(result)};
 }
+#endif // MBGL_SOURCE_IMAGE_DISABLE_ALL
 } // namespace
 
 std::optional<std::unique_ptr<Source>> Converter<std::unique_ptr<Source>>::operator()(const Convertible& value,
@@ -225,15 +237,30 @@ std::optional<std::unique_ptr<Source>> Converter<std::unique_ptr<Source>>::opera
     }
     const std::string& tname = type.value();
     if (tname == "raster") {
+#if defined(MBGL_LAYER_RASTER_DISABLE_ALL)
+        error.message = "raster sources are disabled in this build";
+        return std::nullopt;
+#else
         return convertRasterSource(id, value, error);
+#endif
     } else if (tname == "raster-dem") {
+#if defined(MBGL_SOURCE_RASTER_DEM_DISABLE_ALL)
+        error.message = "raster-dem sources are disabled in this build";
+        return std::nullopt;
+#else
         return convertRasterDEMSource(id, value, error);
+#endif
     } else if (tname == "vector") {
         return convertVectorSource(id, value, error);
     } else if (tname == "geojson") {
         return convertGeoJSONSource(id, value, error);
     } else if (tname == "image") {
+#if defined(MBGL_SOURCE_IMAGE_DISABLE_ALL)
+        error.message = "image sources are disabled in this build";
+        return std::nullopt;
+#else
         return convertImageSource(id, value, error);
+#endif
     } else {
         error.message = "invalid source type";
         return std::nullopt;
