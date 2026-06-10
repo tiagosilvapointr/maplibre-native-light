@@ -7,7 +7,7 @@ vendor dependencies that aren't needed by vector-tile-only iOS clients.
 
 **Final size:**
 `MapLibre.dynamic.xcframework` 21.61 MB → `MapLibreLight.dynamic.xcframework`
-**17.95 MB** (~17 % smaller compressed).
+**20.10 MB** (~7 % smaller compressed).
 
 Build command:
 
@@ -88,11 +88,11 @@ vs `mbgl-default`:
 
 ## 5. Text shaping
 
-`mbgl-core-light` is built **without HarfBuzz** (the
-`harfbuzz_text_shaping` select branch is omitted). Legacy shaping is
-used, and the `//vendor:harfbuzz` + `//vendor:freetype` deps are not
-linked. Complex-script rendering (Indic, Arabic, Thai) is lower quality
-than the standard build.
+`mbgl-core-light` follows the project-wide `--//:shaping=` flag (default
+`harfbuzz`) — same as the standard build. Arabic, Indic and Thai render
+identically to `MapLibre.xcframework`. (HarfBuzz costs ~2 MB compressed;
+if you ever decide to ship a Latin/CJK-only build, switching the flag
+to `legacy` drops that.)
 
 ---
 
@@ -107,13 +107,12 @@ available in the light xcframework.
 ## 7. Vendor dependencies dropped
 
 - `//vendor:pmtiles`.
-- `//vendor:freetype` + `//vendor:harfbuzz` (implicit, via the shaping
-  switch).
 
 All other core vendor deps (boost, earcut, eternal, expected-lite,
-maplibre-native-base, metal-cpp, parsedate, polylabel, protozero,
-rapidjson, supercluster, unique_resource, unordered_dense, vector-tile,
-wagyu, mlt_cpp, ghc_filesystem, ICU) are retained.
+freetype, harfbuzz, maplibre-native-base, metal-cpp, parsedate,
+polylabel, protozero, rapidjson, supercluster, unique_resource,
+unordered_dense, vector-tile, wagyu, mlt_cpp, ghc_filesystem, ICU) are
+retained.
 
 ---
 
