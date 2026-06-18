@@ -82,7 +82,25 @@ void RenderPass::resetState() {
 
     currentCullMode = MTL::CullModeNone;
     currentWinding = MTL::WindingClockwise;
-    currentScissorRect = {.x = 0, .y = 0, .width = 0, .height = 0};
+    currentScissorRect = {.x = 0, .y = 0, .width = width, .height = height};
+
+    // A custom/plugin layer may have driven the Metal encoder directly, leaving
+    // it with cull mode, winding, scissor, stencil reference, or viewport that
+    // no longer match our cached values. Subsequent setters early-return when
+    // the requested value equals the cache, so we must push the cache values to
+    // the encoder here to guarantee they agree.
+    if (encoder) {
+        encoder->setCullMode(currentCullMode);
+        encoder->setFrontFacingWinding(currentWinding);
+        encoder->setStencilReferenceValue(currentStencilReferenceValue);
+        encoder->setScissorRect(currentScissorRect);
+        encoder->setViewport(MTL::Viewport{.originX = 0.0,
+                                           .originY = 0.0,
+                                           .width = static_cast<double>(width),
+                                           .height = static_cast<double>(height),
+                                           .znear = 0.0,
+                                           .zfar = 1.0});
+    }
 }
 
 namespace {
