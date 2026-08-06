@@ -5,11 +5,17 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 load(
     "//bazel:core.bzl",
     "MLN_CORE_HEADERS",
+    "MLN_CORE_COMMON_HEADERS",
+    "MLN_CORE_COMMON_SOURCE",
     "MLN_CORE_SOURCE",
     "MLN_DRAWABLES_GL_HEADERS",
     "MLN_DRAWABLES_GL_SOURCE",
     "MLN_DRAWABLES_HEADERS",
+    "MLN_DRAWABLES_COMMON_HEADERS",
+    "MLN_DRAWABLES_COMMON_SOURCE",
     "MLN_DRAWABLES_MTL_HEADERS",
+    "MLN_DRAWABLES_MTL_COMMON_HEADERS",
+    "MLN_DRAWABLES_MTL_COMMON_SOURCE",
     "MLN_DRAWABLES_MTL_SOURCE",
     "MLN_DRAWABLES_SOURCE",
     "MLN_DRAWABLES_WEBGPU_HEADERS",
@@ -17,16 +23,136 @@ load(
     "MLN_GENERATED_OPENGL_SHADER_HEADERS",
     "MLN_GENERATED_SHADER_HEADERS",
     "MLN_GENERATED_SHADER_SOURCE",
+    "MLN_GENERATED_STYLE_SOURCE_COMMON",
     "MLN_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_BACKGROUND_CORE_HEADERS",
+    "MLN_LAYER_BACKGROUND_CORE_SOURCE",
+    "MLN_LAYER_BACKGROUND_DRAWABLES_HEADERS",
+    "MLN_LAYER_BACKGROUND_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_BACKGROUND_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_BACKGROUND_DRAWABLES_SOURCE",
+    "MLN_LAYER_BACKGROUND_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_BACKGROUND_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_BACKGROUND_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_CIRCLE_CORE_HEADERS",
+    "MLN_LAYER_CIRCLE_CORE_SOURCE",
+    "MLN_LAYER_CIRCLE_DRAWABLES_HEADERS",
+    "MLN_LAYER_CIRCLE_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_CIRCLE_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_CIRCLE_DRAWABLES_SOURCE",
+    "MLN_LAYER_CIRCLE_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_CIRCLE_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_CIRCLE_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_COLOR_RELIEF_CORE_HEADERS",
+    "MLN_LAYER_COLOR_RELIEF_CORE_SOURCE",
+    "MLN_LAYER_COLOR_RELIEF_DRAWABLES_HEADERS",
+    "MLN_LAYER_COLOR_RELIEF_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_COLOR_RELIEF_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_COLOR_RELIEF_DRAWABLES_SOURCE",
+    "MLN_LAYER_COLOR_RELIEF_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_COLOR_RELIEF_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_COLOR_RELIEF_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_CUSTOM_CORE_HEADERS",
+    "MLN_LAYER_CUSTOM_CORE_SOURCE",
+    "MLN_LAYER_CUSTOM_DRAWABLES_HEADERS",
+    "MLN_LAYER_CUSTOM_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_CUSTOM_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_CUSTOM_DRAWABLES_SOURCE",
+    "MLN_LAYER_CUSTOM_DRAWABLE_CORE_HEADERS",
+    "MLN_LAYER_CUSTOM_DRAWABLE_CORE_SOURCE",
+    "MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_HEADERS",
+    "MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_SOURCE",
+    "MLN_LAYER_FILL_CORE_HEADERS",
+    "MLN_LAYER_FILL_CORE_SOURCE",
+    "MLN_LAYER_FILL_DRAWABLES_HEADERS",
+    "MLN_LAYER_FILL_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_FILL_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_FILL_DRAWABLES_SOURCE",
+    "MLN_LAYER_FILL_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_FILL_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_FILL_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_FILL_EXTRUSION_CORE_HEADERS",
+    "MLN_LAYER_FILL_EXTRUSION_CORE_SOURCE",
+    "MLN_LAYER_FILL_EXTRUSION_DRAWABLES_HEADERS",
+    "MLN_LAYER_FILL_EXTRUSION_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_FILL_EXTRUSION_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_FILL_EXTRUSION_DRAWABLES_SOURCE",
+    "MLN_LAYER_FILL_EXTRUSION_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_FILL_EXTRUSION_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_FILL_EXTRUSION_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_HEATMAP_CORE_HEADERS",
+    "MLN_LAYER_HEATMAP_CORE_SOURCE",
+    "MLN_LAYER_HEATMAP_DRAWABLES_HEADERS",
+    "MLN_LAYER_HEATMAP_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_HEATMAP_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_HEATMAP_DRAWABLES_SOURCE",
+    "MLN_LAYER_HEATMAP_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_HEATMAP_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_HEATMAP_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_HILLSHADE_CORE_HEADERS",
+    "MLN_LAYER_HILLSHADE_CORE_SOURCE",
+    "MLN_LAYER_HILLSHADE_DRAWABLES_HEADERS",
+    "MLN_LAYER_HILLSHADE_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_HILLSHADE_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_HILLSHADE_DRAWABLES_SOURCE",
+    "MLN_LAYER_HILLSHADE_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_HILLSHADE_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_HILLSHADE_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_LINE_CORE_HEADERS",
+    "MLN_LAYER_LINE_CORE_SOURCE",
+    "MLN_LAYER_LINE_DRAWABLES_HEADERS",
+    "MLN_LAYER_LINE_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_LINE_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_LINE_DRAWABLES_SOURCE",
+    "MLN_LAYER_LINE_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_LINE_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_LINE_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_LOCATION_INDICATOR_CORE_HEADERS",
+    "MLN_LAYER_LOCATION_INDICATOR_CORE_SOURCE",
+    "MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_HEADERS",
+    "MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_SOURCE",
+    "MLN_LAYER_LOCATION_INDICATOR_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_LOCATION_INDICATOR_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_LOCATION_INDICATOR_PUBLIC_GENERATED_STYLE_HEADERS",
     "MLN_LAYER_PLUGIN_HEADERS",
     "MLN_LAYER_PLUGIN_SOURCE",
+    "MLN_LAYER_RASTER_CORE_HEADERS",
+    "MLN_LAYER_RASTER_CORE_SOURCE",
+    "MLN_LAYER_RASTER_DRAWABLES_HEADERS",
+    "MLN_LAYER_RASTER_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_RASTER_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_RASTER_DRAWABLES_SOURCE",
+    "MLN_LAYER_RASTER_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_RASTER_DEM_CORE_HEADERS",
+    "MLN_LAYER_RASTER_DEM_CORE_SOURCE",
+    "MLN_LAYER_RASTER_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_RASTER_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_RASTER_SHARED_CORE_HEADERS",
+    "MLN_LAYER_RASTER_SHARED_CORE_SOURCE",
+    "MLN_LAYER_SYMBOL_CORE_HEADERS",
+    "MLN_LAYER_SYMBOL_CORE_SOURCE",
+    "MLN_LAYER_SYMBOL_DRAWABLES_HEADERS",
+    "MLN_LAYER_SYMBOL_DRAWABLES_MTL_HEADERS",
+    "MLN_LAYER_SYMBOL_DRAWABLES_MTL_SOURCE",
+    "MLN_LAYER_SYMBOL_DRAWABLES_SOURCE",
+    "MLN_LAYER_SYMBOL_GENERATED_STYLE_SOURCE",
+    "MLN_LAYER_SYMBOL_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_LAYER_SYMBOL_PUBLIC_GENERATED_STYLE_HEADERS",
+    "MLN_MLT_CORE_SOURCE",
     "MLN_OPENGL_HEADERS",
     "MLN_OPENGL_SOURCE",
+    "MLN_PRIVATE_GENERATED_STYLE_HEADERS_COMMON",
     "MLN_PRIVATE_GENERATED_STYLE_HEADERS",
+    "MLN_PUBLIC_GENERATED_STYLE_HEADERS_COMMON",
     "MLN_PUBLIC_GENERATED_STYLE_HEADERS",
     "MLN_SHAPING_HARFBUZZ_SRCS",
 )
 load("//bazel:flags.bzl", "CPP_FLAGS", "MAPLIBRE_FLAGS")
+load("//bazel:layer_flags.bzl", "if_layer_enabled", "if_raster_source_enabled", "layer_disable_defines", "layer_flag_settings")
 
 # Generate code required by the core
 
@@ -54,6 +180,141 @@ js_run_binary(
     tool = ":generate-shader-code-script",
 )
 
+_PUBLIC_GENERATED_STYLE_HEADERS = MLN_PUBLIC_GENERATED_STYLE_HEADERS_COMMON + \
+                                  if_layer_enabled("background", MLN_LAYER_BACKGROUND_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  if_layer_enabled("circle", MLN_LAYER_CIRCLE_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  if_layer_enabled("fill", MLN_LAYER_FILL_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  MLN_LAYER_LINE_PUBLIC_GENERATED_STYLE_HEADERS + \
+                                  if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  if_layer_enabled("raster", MLN_LAYER_RASTER_PUBLIC_GENERATED_STYLE_HEADERS) + \
+                                  MLN_LAYER_SYMBOL_PUBLIC_GENERATED_STYLE_HEADERS
+
+_PRIVATE_GENERATED_STYLE_HEADERS = MLN_PRIVATE_GENERATED_STYLE_HEADERS_COMMON + \
+                                   if_layer_enabled("background", MLN_LAYER_BACKGROUND_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   if_layer_enabled("circle", MLN_LAYER_CIRCLE_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   if_layer_enabled("fill", MLN_LAYER_FILL_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   MLN_LAYER_LINE_PRIVATE_GENERATED_STYLE_HEADERS + \
+                                   if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   if_layer_enabled("raster", MLN_LAYER_RASTER_PRIVATE_GENERATED_STYLE_HEADERS) + \
+                                   MLN_LAYER_SYMBOL_PRIVATE_GENERATED_STYLE_HEADERS
+
+_GENERATED_STYLE_SOURCE = MLN_GENERATED_STYLE_SOURCE_COMMON + \
+                          if_layer_enabled("background", MLN_LAYER_BACKGROUND_GENERATED_STYLE_SOURCE) + \
+                          if_layer_enabled("circle", MLN_LAYER_CIRCLE_GENERATED_STYLE_SOURCE) + \
+                          if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_GENERATED_STYLE_SOURCE) + \
+                          if_layer_enabled("fill", MLN_LAYER_FILL_GENERATED_STYLE_SOURCE) + \
+                          if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_GENERATED_STYLE_SOURCE) + \
+                          if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_GENERATED_STYLE_SOURCE) + \
+                          if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_GENERATED_STYLE_SOURCE) + \
+                          MLN_LAYER_LINE_GENERATED_STYLE_SOURCE + \
+                          if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_GENERATED_STYLE_SOURCE) + \
+                          if_layer_enabled("raster", MLN_LAYER_RASTER_GENERATED_STYLE_SOURCE) + \
+                          MLN_LAYER_SYMBOL_GENERATED_STYLE_SOURCE
+
+_CORE_SOURCE = MLN_CORE_COMMON_SOURCE + \
+               select({
+                   "//:mlt_enabled": MLN_MLT_CORE_SOURCE,
+                   "//conditions:default": [],
+               }) + \
+               if_layer_enabled("background", MLN_LAYER_BACKGROUND_CORE_SOURCE) + \
+               if_layer_enabled("circle", MLN_LAYER_CIRCLE_CORE_SOURCE) + \
+               if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_CORE_SOURCE) + \
+               if_layer_enabled("custom", MLN_LAYER_CUSTOM_CORE_SOURCE) + \
+               if_layer_enabled("fill", MLN_LAYER_FILL_CORE_SOURCE) + \
+               if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_CORE_SOURCE) + \
+               if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_CORE_SOURCE) + \
+               if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_CORE_SOURCE) + \
+               if_layer_enabled("line", MLN_LAYER_LINE_CORE_SOURCE) + \
+               if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_CORE_SOURCE) + \
+               if_layer_enabled("raster_dem", MLN_LAYER_RASTER_DEM_CORE_SOURCE) + \
+               if_layer_enabled("raster", MLN_LAYER_RASTER_CORE_SOURCE) + \
+               if_raster_source_enabled(MLN_LAYER_RASTER_SHARED_CORE_SOURCE) + \
+               MLN_LAYER_SYMBOL_CORE_SOURCE
+
+_CORE_HEADERS = MLN_CORE_COMMON_HEADERS + \
+                if_layer_enabled("background", MLN_LAYER_BACKGROUND_CORE_HEADERS) + \
+                if_layer_enabled("circle", MLN_LAYER_CIRCLE_CORE_HEADERS) + \
+                if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_CORE_HEADERS) + \
+                if_layer_enabled("custom", MLN_LAYER_CUSTOM_CORE_HEADERS) + \
+                if_layer_enabled("fill", MLN_LAYER_FILL_CORE_HEADERS) + \
+                if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_CORE_HEADERS) + \
+                if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_CORE_HEADERS) + \
+                if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_CORE_HEADERS) + \
+                if_layer_enabled("line", MLN_LAYER_LINE_CORE_HEADERS) + \
+                if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_CORE_HEADERS) + \
+                if_layer_enabled("raster_dem", MLN_LAYER_RASTER_DEM_CORE_HEADERS) + \
+                if_layer_enabled("raster", MLN_LAYER_RASTER_CORE_HEADERS) + \
+                if_raster_source_enabled(MLN_LAYER_RASTER_SHARED_CORE_HEADERS) + \
+                MLN_LAYER_SYMBOL_CORE_HEADERS
+
+_DRAWABLES_SOURCE = MLN_DRAWABLES_COMMON_SOURCE + \
+                    if_layer_enabled("background", MLN_LAYER_BACKGROUND_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("circle", MLN_LAYER_CIRCLE_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("custom", MLN_LAYER_CUSTOM_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("custom_drawable", MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("fill", MLN_LAYER_FILL_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("line", MLN_LAYER_LINE_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_SOURCE) + \
+                    if_layer_enabled("raster", MLN_LAYER_RASTER_DRAWABLES_SOURCE) + \
+                    MLN_LAYER_SYMBOL_DRAWABLES_SOURCE
+
+_DRAWABLES_HEADERS = MLN_DRAWABLES_COMMON_HEADERS + \
+                     if_layer_enabled("background", MLN_LAYER_BACKGROUND_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("circle", MLN_LAYER_CIRCLE_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("custom", MLN_LAYER_CUSTOM_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("custom_drawable", MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("fill", MLN_LAYER_FILL_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("line", MLN_LAYER_LINE_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_HEADERS) + \
+                     if_layer_enabled("raster", MLN_LAYER_RASTER_DRAWABLES_HEADERS) + \
+                     MLN_LAYER_SYMBOL_DRAWABLES_HEADERS
+
+_DRAWABLES_MTL_SOURCE = MLN_DRAWABLES_MTL_COMMON_SOURCE + \
+                        if_layer_enabled("background", MLN_LAYER_BACKGROUND_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("circle", MLN_LAYER_CIRCLE_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("custom", MLN_LAYER_CUSTOM_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("custom_drawable", MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("fill", MLN_LAYER_FILL_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("line", MLN_LAYER_LINE_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_MTL_SOURCE) + \
+                        if_layer_enabled("raster", MLN_LAYER_RASTER_DRAWABLES_MTL_SOURCE) + \
+                        MLN_LAYER_SYMBOL_DRAWABLES_MTL_SOURCE
+
+_DRAWABLES_MTL_HEADERS = MLN_DRAWABLES_MTL_COMMON_HEADERS + \
+                         if_layer_enabled("background", MLN_LAYER_BACKGROUND_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("circle", MLN_LAYER_CIRCLE_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("custom", MLN_LAYER_CUSTOM_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("custom_drawable", MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("fill", MLN_LAYER_FILL_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("line", MLN_LAYER_LINE_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("location_indicator", MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_MTL_HEADERS) + \
+                         if_layer_enabled("raster", MLN_LAYER_RASTER_DRAWABLES_MTL_HEADERS) + \
+                         MLN_LAYER_SYMBOL_DRAWABLES_MTL_HEADERS
+
 # This header only target strips the __generated__ prefix for the compiler
 # search paths, making the location of generated code transparent to the build
 cc_library(
@@ -61,7 +322,7 @@ cc_library(
     hdrs = [
                ":generated_shaders",
                ":generated_style_code",
-           ] + MLN_PUBLIC_GENERATED_STYLE_HEADERS +
+           ] + _PUBLIC_GENERATED_STYLE_HEADERS +
            MLN_GENERATED_SHADER_HEADERS +
            select({
                "//:metal_renderer": [],
@@ -73,7 +334,7 @@ cc_library(
 # ditto, but for private headers (under the src/ path)
 cc_library(
     name = "mbgl-core-generated-private-artifacts",
-    hdrs = [":generated_style_code"] + MLN_PRIVATE_GENERATED_STYLE_HEADERS,
+    hdrs = [":generated_style_code"] + _PRIVATE_GENERATED_STYLE_HEADERS,
     visibility = ["//visibility:private"],
 )
 
@@ -81,22 +342,25 @@ cc_library(
 # the prefix from the path.
 cc_library(
     name = "mbgl-core",
-    srcs = MLN_LAYER_PLUGIN_SOURCE +
-           MLN_CORE_SOURCE +
+    srcs = if_layer_enabled("plugin", MLN_LAYER_PLUGIN_SOURCE) +
+           _CORE_SOURCE +
            MLN_GENERATED_SHADER_SOURCE +
-           MLN_GENERATED_STYLE_SOURCE + select({
-        ":drawable_renderer": MLN_OPENGL_SOURCE + MLN_DRAWABLES_SOURCE + MLN_DRAWABLES_GL_SOURCE,
-        ":metal_renderer": MLN_DRAWABLES_SOURCE + MLN_DRAWABLES_MTL_SOURCE,
-        ":webgpu_renderer": MLN_DRAWABLES_SOURCE + MLN_DRAWABLES_WEBGPU_SOURCE,
+           _GENERATED_STYLE_SOURCE +
+           _DRAWABLES_SOURCE + select({
+        ":drawable_renderer": MLN_OPENGL_SOURCE + MLN_DRAWABLES_GL_SOURCE,
+        ":metal_renderer": MLN_DRAWABLES_MTL_SOURCE,
+        ":webgpu_renderer": MLN_DRAWABLES_WEBGPU_SOURCE,
         "//conditions:default": [],
     }) + select({
         "//:harfbuzz_text_shaping": MLN_SHAPING_HARFBUZZ_SRCS,
         "//conditions:default": [],
     }),
-    hdrs = MLN_LAYER_PLUGIN_HEADERS + MLN_CORE_HEADERS + select({
-        ":drawable_renderer": MLN_OPENGL_HEADERS + MLN_DRAWABLES_HEADERS + MLN_DRAWABLES_GL_HEADERS,
-        ":metal_renderer": MLN_DRAWABLES_HEADERS + MLN_DRAWABLES_MTL_HEADERS,
-        ":webgpu_renderer": MLN_DRAWABLES_HEADERS + MLN_DRAWABLES_WEBGPU_HEADERS,
+    hdrs = if_layer_enabled("plugin", MLN_LAYER_PLUGIN_HEADERS) +
+           _CORE_HEADERS +
+           MLN_DRAWABLES_HEADERS + select({
+        ":drawable_renderer": MLN_OPENGL_HEADERS + MLN_DRAWABLES_GL_HEADERS,
+        ":metal_renderer": MLN_DRAWABLES_MTL_HEADERS,
+        ":webgpu_renderer": MLN_DRAWABLES_WEBGPU_HEADERS,
         "//conditions:default": [],
     }),
     copts = CPP_FLAGS + MAPLIBRE_FLAGS,
@@ -116,7 +380,10 @@ cc_library(
     }) + select({
         "//:harfbuzz_text_shaping": ["MLN_TEXT_SHAPING_HARFBUZZ=1"],
         "//conditions:default": [],
-    }),
+    }) + select({
+        "//:mlt_enabled": ["MLN_WITH_MLT=1"],
+        "//conditions:default": [],
+    }) + layer_disable_defines(),
     includes = [
         "include",
         "src",
@@ -154,7 +421,6 @@ cc_library(
         "//vendor:unordered_dense",
         "//vendor:vector-tile",
         "//vendor:wagyu",
-        "//vendor/maplibre-tile-spec/cpp:mlt_cpp",
     ] + select({
         "@platforms//os:ios": [
             "//vendor:ghc_filesystem",
@@ -176,6 +442,11 @@ cc_library(
         ":harfbuzz_text_shaping": [
             "//vendor:freetype",
             "//vendor:harfbuzz",
+        ],
+        "//conditions:default": [],
+    }) + select({
+        "//:mlt_enabled": [
+            "//vendor/maplibre-tile-spec/cpp:mlt_cpp",
         ],
         "//conditions:default": [],
     }) + select({
@@ -247,6 +518,20 @@ config_setting(
 )
 
 bool_flag(
+    name = "enable_mlt",
+    build_setting_default = True,
+    visibility = ["//visibility:public"],
+)
+
+config_setting(
+    name = "mlt_enabled",
+    flag_values = {
+        ":enable_mlt": "true",
+    },
+    visibility = ["//visibility:public"],
+)
+
+bool_flag(
     name = "use_rust",
     build_setting_default = False,
     visibility = ["//visibility:public"],
@@ -258,6 +543,8 @@ config_setting(
         "//:use_rust": "true",
     },
 )
+
+layer_flag_settings()
 
 exports_files(
     [

@@ -19,7 +19,9 @@ private:
     const std::optional<Tileset>& getTileset() const override;
 
 private:
+#if defined(MLN_WITH_MLT)
     std::optional<bool> isMLT;
+#endif
 };
 
 } // namespace mbgl

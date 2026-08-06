@@ -69,6 +69,159 @@ MLN_GENERATED_STYLE_SOURCE = [
     "src/mbgl/style/light.cpp",
 ]
 
+MLN_LAYER_BACKGROUND_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/background_layer.hpp",
+]
+
+MLN_LAYER_CIRCLE_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/circle_layer.hpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/color_relief_layer.hpp",
+]
+
+MLN_LAYER_FILL_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/fill_layer.hpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/fill_extrusion_layer.hpp",
+]
+
+MLN_LAYER_HEATMAP_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/heatmap_layer.hpp",
+]
+
+MLN_LAYER_HILLSHADE_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/hillshade_layer.hpp",
+]
+
+MLN_LAYER_LINE_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/line_layer.hpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/location_indicator_layer.hpp",
+]
+
+MLN_LAYER_RASTER_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/raster_layer.hpp",
+]
+
+MLN_LAYER_SYMBOL_PUBLIC_GENERATED_STYLE_HEADERS = [
+    "include/mbgl/style/layers/symbol_layer.hpp",
+]
+
+MLN_PUBLIC_GENERATED_STYLE_HEADERS_COMMON = [
+    "include/mbgl/style/light.hpp",
+]
+
+MLN_LAYER_BACKGROUND_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/background_layer_properties.hpp",
+]
+
+MLN_LAYER_CIRCLE_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/circle_layer_properties.hpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/color_relief_layer_properties.hpp",
+]
+
+MLN_LAYER_FILL_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/fill_layer_properties.hpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/fill_extrusion_layer_properties.hpp",
+]
+
+MLN_LAYER_HEATMAP_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/heatmap_layer_properties.hpp",
+]
+
+MLN_LAYER_HILLSHADE_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/hillshade_layer_properties.hpp",
+]
+
+MLN_LAYER_LINE_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/line_layer_properties.hpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/location_indicator_layer_properties.hpp",
+]
+
+MLN_LAYER_RASTER_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/raster_layer_properties.hpp",
+]
+
+MLN_LAYER_SYMBOL_PRIVATE_GENERATED_STYLE_HEADERS = [
+    "src/mbgl/style/layers/symbol_layer_properties.hpp",
+]
+
+MLN_PRIVATE_GENERATED_STYLE_HEADERS_COMMON = []
+
+MLN_LAYER_BACKGROUND_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/background_layer_properties.cpp",
+    "src/mbgl/style/layers/background_layer.cpp",
+]
+
+MLN_LAYER_CIRCLE_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/circle_layer_properties.cpp",
+    "src/mbgl/style/layers/circle_layer.cpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/color_relief_layer_properties.cpp",
+    "src/mbgl/style/layers/color_relief_layer.cpp",
+]
+
+MLN_LAYER_FILL_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/fill_layer_properties.cpp",
+    "src/mbgl/style/layers/fill_layer.cpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/fill_extrusion_layer_properties.cpp",
+    "src/mbgl/style/layers/fill_extrusion_layer.cpp",
+]
+
+MLN_LAYER_HEATMAP_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/heatmap_layer_properties.cpp",
+    "src/mbgl/style/layers/heatmap_layer.cpp",
+]
+
+MLN_LAYER_HILLSHADE_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/hillshade_layer_properties.cpp",
+    "src/mbgl/style/layers/hillshade_layer.cpp",
+]
+
+MLN_LAYER_LINE_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/line_layer_properties.cpp",
+    "src/mbgl/style/layers/line_layer.cpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/location_indicator_layer_properties.cpp",
+    "src/mbgl/style/layers/location_indicator_layer.cpp",
+]
+
+MLN_LAYER_RASTER_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/raster_layer_properties.cpp",
+    "src/mbgl/style/layers/raster_layer.cpp",
+]
+
+MLN_LAYER_SYMBOL_GENERATED_STYLE_SOURCE = [
+    "src/mbgl/style/layers/symbol_layer_properties.cpp",
+    "src/mbgl/style/layers/symbol_layer.cpp",
+]
+
+MLN_GENERATED_STYLE_SOURCE_COMMON = [
+    "src/mbgl/style/light.cpp",
+]
+
 MLN_GENERATED_SHADER_HEADERS = [
     "include/mbgl/shaders/shader_source.hpp",
     "include/mbgl/shaders/shader_manifest.hpp",
@@ -116,7 +269,7 @@ MLN_GENERATED_OPENGL_SHADER_HEADERS = [
     "include/mbgl/shaders/gl/prelude.hpp",
 ]
 
-MLN_CORE_SOURCE = [
+MLN_CORE_SOURCE_BASE = [
     "src/mbgl/actor/mailbox.cpp",
     "src/mbgl/actor/scheduler.cpp",
     "src/mbgl/algorithm/update_renderables.hpp",
@@ -527,10 +680,6 @@ MLN_CORE_SOURCE = [
     "src/mbgl/tile/tile_operation.cpp",
     "src/mbgl/tile/vector_tile.cpp",
     "src/mbgl/tile/vector_tile.hpp",
-    "src/mbgl/tile/vector_mlt_tile.cpp",
-    "src/mbgl/tile/vector_mlt_tile.hpp",
-    "src/mbgl/tile/vector_mlt_tile_data.cpp",
-    "src/mbgl/tile/vector_mlt_tile_data.hpp",
     "src/mbgl/tile/vector_mvt_tile.cpp",
     "src/mbgl/tile/vector_mvt_tile.hpp",
     "src/mbgl/tile/vector_mvt_tile_data.cpp",
@@ -613,7 +762,16 @@ MLN_CORE_SOURCE = [
     "src/mbgl/util/version.cpp",
     "src/mbgl/util/version.hpp",
     "src/mbgl/util/work_request.cpp",
-] + select({
+]
+
+MLN_MLT_CORE_SOURCE = [
+    "src/mbgl/tile/vector_mlt_tile.cpp",
+    "src/mbgl/tile/vector_mlt_tile.hpp",
+    "src/mbgl/tile/vector_mlt_tile_data.cpp",
+    "src/mbgl/tile/vector_mlt_tile_data.hpp",
+]
+
+MLN_CORE_COLOR_SOURCE = select({
     "//:rust": [
         "src/mbgl/util/color.rs.cpp",
     ],
@@ -621,6 +779,195 @@ MLN_CORE_SOURCE = [
         "src/mbgl/util/color.cpp",
     ],
 })
+
+MLN_CORE_SOURCE = MLN_CORE_SOURCE_BASE + MLN_CORE_COLOR_SOURCE
+
+def _without(items, excluded):
+    excluded = {item: True for item in excluded}
+    return [item for item in items if item not in excluded]
+
+MLN_LAYER_BACKGROUND_CORE_SOURCE = [
+    "src/mbgl/layermanager/background_layer_factory.cpp",
+    "src/mbgl/renderer/layers/render_background_layer.cpp",
+    "src/mbgl/renderer/layers/render_background_layer.hpp",
+    "src/mbgl/style/layers/background_layer_impl.cpp",
+    "src/mbgl/style/layers/background_layer_impl.hpp",
+]
+
+MLN_LAYER_CIRCLE_CORE_SOURCE = [
+    "src/mbgl/layermanager/circle_layer_factory.cpp",
+    "src/mbgl/layout/circle_layout.hpp",
+    "src/mbgl/renderer/buckets/circle_bucket.cpp",
+    "src/mbgl/renderer/buckets/circle_bucket.hpp",
+    "src/mbgl/renderer/layers/render_circle_layer.cpp",
+    "src/mbgl/renderer/layers/render_circle_layer.hpp",
+    "src/mbgl/style/layers/circle_layer_impl.cpp",
+    "src/mbgl/style/layers/circle_layer_impl.hpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_CORE_SOURCE = [
+    "src/mbgl/layermanager/color_relief_layer_factory.cpp",
+    "src/mbgl/renderer/layers/render_color_relief_layer.cpp",
+    "src/mbgl/renderer/layers/render_color_relief_layer.hpp",
+    "src/mbgl/style/layers/color_relief_layer_impl.cpp",
+    "src/mbgl/style/layers/color_relief_layer_impl.hpp",
+]
+
+MLN_LAYER_CUSTOM_CORE_SOURCE = [
+    "src/mbgl/layermanager/custom_layer_factory.cpp",
+    "src/mbgl/renderer/layers/render_custom_layer.cpp",
+    "src/mbgl/renderer/layers/render_custom_layer.hpp",
+    "src/mbgl/style/layers/custom_layer.cpp",
+    "src/mbgl/style/layers/custom_layer_impl.cpp",
+    "src/mbgl/style/layers/custom_layer_impl.hpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLE_CORE_SOURCE = [
+    "src/mbgl/layermanager/custom_drawable_layer_factory.cpp",
+    "src/mbgl/renderer/layers/render_custom_drawable_layer.cpp",
+    "src/mbgl/renderer/layers/render_custom_drawable_layer.hpp",
+    "src/mbgl/style/layers/custom_drawable_layer.cpp",
+    "src/mbgl/style/layers/custom_drawable_layer_impl.cpp",
+    "src/mbgl/style/layers/custom_drawable_layer_impl.hpp",
+]
+
+MLN_LAYER_FILL_CORE_SOURCE = [
+    "src/mbgl/layermanager/fill_layer_factory.cpp",
+    "src/mbgl/annotation/fill_annotation_impl.cpp",
+    "src/mbgl/annotation/fill_annotation_impl.hpp",
+    "src/mbgl/renderer/buckets/fill_bucket.cpp",
+    "src/mbgl/renderer/layers/render_fill_layer.cpp",
+    "src/mbgl/renderer/layers/render_fill_layer.hpp",
+    "src/mbgl/style/layers/fill_layer_impl.cpp",
+    "src/mbgl/style/layers/fill_layer_impl.hpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_CORE_SOURCE = [
+    "src/mbgl/layermanager/fill_extrusion_layer_factory.cpp",
+    "src/mbgl/renderer/buckets/fill_extrusion_bucket.cpp",
+    "src/mbgl/renderer/buckets/fill_extrusion_bucket.hpp",
+    "src/mbgl/renderer/layers/render_fill_extrusion_layer.cpp",
+    "src/mbgl/renderer/layers/render_fill_extrusion_layer.hpp",
+    "src/mbgl/style/layers/fill_extrusion_layer_impl.cpp",
+    "src/mbgl/style/layers/fill_extrusion_layer_impl.hpp",
+]
+
+MLN_LAYER_HEATMAP_CORE_SOURCE = [
+    "src/mbgl/layermanager/heatmap_layer_factory.cpp",
+    "src/mbgl/renderer/buckets/heatmap_bucket.cpp",
+    "src/mbgl/renderer/buckets/heatmap_bucket.hpp",
+    "src/mbgl/renderer/layers/render_heatmap_layer.cpp",
+    "src/mbgl/renderer/layers/render_heatmap_layer.hpp",
+    "src/mbgl/style/layers/heatmap_layer_impl.cpp",
+    "src/mbgl/style/layers/heatmap_layer_impl.hpp",
+]
+
+MLN_LAYER_HILLSHADE_CORE_SOURCE = [
+    "src/mbgl/layermanager/hillshade_layer_factory.cpp",
+    "src/mbgl/renderer/layers/render_hillshade_layer.cpp",
+    "src/mbgl/renderer/layers/render_hillshade_layer.hpp",
+    "src/mbgl/style/layers/hillshade_layer_impl.cpp",
+    "src/mbgl/style/layers/hillshade_layer_impl.hpp",
+]
+
+MLN_LAYER_LINE_CORE_SOURCE = [
+    "src/mbgl/layermanager/line_layer_factory.cpp",
+    "src/mbgl/renderer/layers/render_line_layer.cpp",
+    "src/mbgl/renderer/layers/render_line_layer.hpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_CORE_SOURCE = [
+    "src/mbgl/layermanager/location_indicator_layer_factory.cpp",
+    "src/mbgl/renderer/layers/render_location_indicator_layer.cpp",
+    "src/mbgl/renderer/layers/render_location_indicator_layer.hpp",
+    "src/mbgl/style/layers/location_indicator_layer_impl.cpp",
+    "src/mbgl/style/layers/location_indicator_layer_impl.hpp",
+]
+
+MLN_LAYER_RASTER_CORE_SOURCE = [
+    "src/mbgl/layermanager/raster_layer_factory.cpp",
+    "src/mbgl/renderer/buckets/raster_bucket.cpp",
+    "src/mbgl/renderer/layers/render_raster_layer.cpp",
+    "src/mbgl/renderer/layers/render_raster_layer.hpp",
+    "src/mbgl/renderer/sources/render_image_source.cpp",
+    "src/mbgl/renderer/sources/render_image_source.hpp",
+    "src/mbgl/renderer/sources/render_raster_source.cpp",
+    "src/mbgl/renderer/sources/render_raster_source.hpp",
+    "src/mbgl/style/layers/raster_layer_impl.cpp",
+    "src/mbgl/style/layers/raster_layer_impl.hpp",
+    "src/mbgl/style/sources/image_source.cpp",
+    "src/mbgl/style/sources/image_source_impl.cpp",
+    "src/mbgl/style/sources/image_source_impl.hpp",
+    "src/mbgl/tile/raster_tile.cpp",
+    "src/mbgl/tile/raster_tile.hpp",
+    "src/mbgl/tile/raster_tile_worker.cpp",
+    "src/mbgl/tile/raster_tile_worker.hpp",
+]
+
+MLN_LAYER_RASTER_SHARED_CORE_SOURCE = [
+    "src/mbgl/style/sources/raster_source.cpp",
+]
+
+MLN_LAYER_RASTER_DEM_CORE_SOURCE = [
+    "src/mbgl/geometry/dem_data.cpp",
+    "src/mbgl/geometry/dem_data.hpp",
+    "src/mbgl/renderer/buckets/hillshade_bucket.cpp",
+    "src/mbgl/renderer/buckets/hillshade_bucket.hpp",
+    "src/mbgl/renderer/sources/render_raster_dem_source.cpp",
+    "src/mbgl/renderer/sources/render_raster_dem_source.hpp",
+    "src/mbgl/style/sources/raster_dem_source.cpp",
+    "src/mbgl/tile/raster_dem_tile.cpp",
+    "src/mbgl/tile/raster_dem_tile.hpp",
+    "src/mbgl/tile/raster_dem_tile_worker.cpp",
+    "src/mbgl/tile/raster_dem_tile_worker.hpp",
+]
+
+MLN_LAYER_SYMBOL_CORE_SOURCE = [
+    "src/mbgl/layermanager/symbol_layer_factory.cpp",
+    "src/mbgl/layout/symbol_feature.hpp",
+    "src/mbgl/layout/symbol_instance.cpp",
+    "src/mbgl/layout/symbol_instance.hpp",
+    "src/mbgl/layout/symbol_layout.cpp",
+    "src/mbgl/layout/symbol_layout.hpp",
+    "src/mbgl/layout/symbol_projection.cpp",
+    "src/mbgl/layout/symbol_projection.hpp",
+    "src/mbgl/renderer/buckets/symbol_bucket.cpp",
+    "src/mbgl/renderer/buckets/symbol_bucket.hpp",
+    "src/mbgl/renderer/layers/render_symbol_layer.cpp",
+    "src/mbgl/renderer/layers/render_symbol_layer.hpp",
+    "src/mbgl/style/layers/symbol_layer_impl.cpp",
+    "src/mbgl/style/layers/symbol_layer_impl.hpp",
+    "src/mbgl/text/collision_feature.cpp",
+    "src/mbgl/text/collision_feature.hpp",
+    "src/mbgl/text/cross_tile_symbol_index.cpp",
+    "src/mbgl/text/cross_tile_symbol_index.hpp",
+    "src/mbgl/text/get_anchors.cpp",
+    "src/mbgl/text/get_anchors.hpp",
+    "src/mbgl/text/placement.cpp",
+    "src/mbgl/text/placement.hpp",
+    "src/mbgl/text/quads.cpp",
+    "src/mbgl/text/quads.hpp",
+]
+
+MLN_CORE_LAYER_SOURCE = (
+    MLN_LAYER_BACKGROUND_CORE_SOURCE +
+    MLN_LAYER_CIRCLE_CORE_SOURCE +
+    MLN_LAYER_COLOR_RELIEF_CORE_SOURCE +
+    MLN_LAYER_CUSTOM_CORE_SOURCE +
+    MLN_LAYER_CUSTOM_DRAWABLE_CORE_SOURCE +
+    MLN_LAYER_FILL_CORE_SOURCE +
+    MLN_LAYER_FILL_EXTRUSION_CORE_SOURCE +
+    MLN_LAYER_HEATMAP_CORE_SOURCE +
+    MLN_LAYER_HILLSHADE_CORE_SOURCE +
+    MLN_LAYER_LINE_CORE_SOURCE +
+    MLN_LAYER_LOCATION_INDICATOR_CORE_SOURCE +
+    MLN_LAYER_RASTER_CORE_SOURCE +
+    MLN_LAYER_RASTER_SHARED_CORE_SOURCE +
+    MLN_LAYER_RASTER_DEM_CORE_SOURCE +
+    MLN_LAYER_SYMBOL_CORE_SOURCE
+)
+
+MLN_CORE_COMMON_SOURCE = _without(MLN_CORE_SOURCE_BASE, MLN_CORE_LAYER_SOURCE) + MLN_CORE_COLOR_SOURCE
 
 MLN_CORE_HEADERS = [
     "include/mbgl/gfx/command_encoder.hpp",
@@ -858,6 +1205,89 @@ MLN_CORE_HEADERS = [
     "include/mbgl/util/work_task_impl.hpp",
 ]
 
+MLN_LAYER_BACKGROUND_CORE_HEADERS = [
+    "include/mbgl/layermanager/background_layer_factory.hpp",
+]
+
+MLN_LAYER_CIRCLE_CORE_HEADERS = [
+    "include/mbgl/layermanager/circle_layer_factory.hpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_CORE_HEADERS = [
+    "include/mbgl/layermanager/color_relief_layer_factory.hpp",
+]
+
+MLN_LAYER_CUSTOM_CORE_HEADERS = [
+    "include/mbgl/layermanager/custom_layer_factory.hpp",
+    "include/mbgl/style/layers/custom_layer.hpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLE_CORE_HEADERS = [
+    "include/mbgl/layermanager/custom_drawable_layer_factory.hpp",
+    "include/mbgl/style/layers/custom_drawable_layer.hpp",
+]
+
+MLN_LAYER_FILL_CORE_HEADERS = [
+    "include/mbgl/layermanager/fill_layer_factory.hpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_CORE_HEADERS = [
+    "include/mbgl/layermanager/fill_extrusion_layer_factory.hpp",
+]
+
+MLN_LAYER_HEATMAP_CORE_HEADERS = [
+    "include/mbgl/layermanager/heatmap_layer_factory.hpp",
+]
+
+MLN_LAYER_HILLSHADE_CORE_HEADERS = [
+    "include/mbgl/layermanager/hillshade_layer_factory.hpp",
+]
+
+MLN_LAYER_LINE_CORE_HEADERS = [
+    "include/mbgl/layermanager/line_layer_factory.hpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_CORE_HEADERS = [
+    "include/mbgl/layermanager/location_indicator_layer_factory.hpp",
+]
+
+MLN_LAYER_RASTER_CORE_HEADERS = [
+    "include/mbgl/layermanager/raster_layer_factory.hpp",
+    "include/mbgl/style/sources/image_source.hpp",
+]
+
+MLN_LAYER_RASTER_SHARED_CORE_HEADERS = [
+    "include/mbgl/style/sources/raster_source.hpp",
+]
+
+MLN_LAYER_RASTER_DEM_CORE_HEADERS = [
+    "include/mbgl/style/sources/raster_dem_source.hpp",
+]
+
+MLN_LAYER_SYMBOL_CORE_HEADERS = [
+    "include/mbgl/layermanager/symbol_layer_factory.hpp",
+]
+
+MLN_CORE_LAYER_HEADERS = (
+    MLN_LAYER_BACKGROUND_CORE_HEADERS +
+    MLN_LAYER_CIRCLE_CORE_HEADERS +
+    MLN_LAYER_COLOR_RELIEF_CORE_HEADERS +
+    MLN_LAYER_CUSTOM_CORE_HEADERS +
+    MLN_LAYER_CUSTOM_DRAWABLE_CORE_HEADERS +
+    MLN_LAYER_FILL_CORE_HEADERS +
+    MLN_LAYER_FILL_EXTRUSION_CORE_HEADERS +
+    MLN_LAYER_HEATMAP_CORE_HEADERS +
+    MLN_LAYER_HILLSHADE_CORE_HEADERS +
+    MLN_LAYER_LINE_CORE_HEADERS +
+    MLN_LAYER_LOCATION_INDICATOR_CORE_HEADERS +
+    MLN_LAYER_RASTER_CORE_HEADERS +
+    MLN_LAYER_RASTER_SHARED_CORE_HEADERS +
+    MLN_LAYER_RASTER_DEM_CORE_HEADERS +
+    MLN_LAYER_SYMBOL_CORE_HEADERS
+)
+
+MLN_CORE_COMMON_HEADERS = _without(MLN_CORE_HEADERS, MLN_CORE_LAYER_HEADERS)
+
 MLN_OPENGL_SOURCE = [
     "src/mbgl/gl/attribute.cpp",
     "src/mbgl/gl/attribute.hpp",
@@ -976,6 +1406,104 @@ MLN_DRAWABLES_SOURCE = [
     "src/mbgl/renderer/layers/render_custom_drawable_layer.hpp",
 ]
 
+MLN_LAYER_BACKGROUND_DRAWABLES_SOURCE = [
+    "src/mbgl/renderer/layers/background_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/background_layer_tweaker.hpp",
+]
+
+MLN_LAYER_CIRCLE_DRAWABLES_SOURCE = [
+    "src/mbgl/renderer/layers/circle_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/circle_layer_tweaker.hpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_DRAWABLES_SOURCE = [
+    "src/mbgl/gfx/color_relief_drawable_data.hpp",
+    "src/mbgl/renderer/layers/color_relief_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/color_relief_layer_tweaker.hpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLES_SOURCE = [
+    "src/mbgl/gfx/drawable_custom_layer_host_tweaker.cpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_SOURCE = [
+    "src/mbgl/style/layers/custom_drawable_layer.cpp",
+    "src/mbgl/layermanager/custom_drawable_layer_factory.cpp",
+    "src/mbgl/style/layers/custom_drawable_layer_impl.cpp",
+    "src/mbgl/style/layers/custom_drawable_layer_impl.hpp",
+    "src/mbgl/renderer/layers/render_custom_drawable_layer.cpp",
+    "src/mbgl/renderer/layers/render_custom_drawable_layer.hpp",
+]
+
+MLN_LAYER_FILL_DRAWABLES_SOURCE = [
+    "src/mbgl/renderer/layers/fill_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/fill_layer_tweaker.hpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_DRAWABLES_SOURCE = [
+    "src/mbgl/renderer/layers/fill_extrusion_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/fill_extrusion_layer_tweaker.hpp",
+]
+
+MLN_LAYER_HEATMAP_DRAWABLES_SOURCE = [
+    "src/mbgl/renderer/layers/heatmap_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/heatmap_layer_tweaker.hpp",
+    "src/mbgl/renderer/layers/heatmap_texture_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/heatmap_texture_layer_tweaker.hpp",
+]
+
+MLN_LAYER_HILLSHADE_DRAWABLES_SOURCE = [
+    "src/mbgl/gfx/hillshade_prepare_drawable_data.hpp",
+    "src/mbgl/renderer/layers/hillshade_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/hillshade_layer_tweaker.hpp",
+    "src/mbgl/renderer/layers/hillshade_prepare_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/hillshade_prepare_layer_tweaker.hpp",
+]
+
+MLN_LAYER_LINE_DRAWABLES_SOURCE = [
+    "src/mbgl/gfx/line_drawable_data.hpp",
+    "src/mbgl/renderer/layers/line_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/line_layer_tweaker.hpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_SOURCE = [
+    "src/mbgl/renderer/layers/location_indicator_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/location_indicator_layer_tweaker.hpp",
+]
+
+MLN_LAYER_RASTER_DRAWABLES_SOURCE = [
+    "src/mbgl/gfx/image_drawable_data.hpp",
+    "src/mbgl/renderer/layers/raster_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/raster_layer_tweaker.hpp",
+]
+
+MLN_LAYER_SYMBOL_DRAWABLES_SOURCE = [
+    "src/mbgl/gfx/symbol_drawable_data.hpp",
+    "src/mbgl/gfx/collision_drawable_data.hpp",
+    "src/mbgl/renderer/layers/symbol_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/symbol_layer_tweaker.hpp",
+    "src/mbgl/renderer/layers/collision_layer_tweaker.cpp",
+    "src/mbgl/renderer/layers/collision_layer_tweaker.hpp",
+]
+
+MLN_DRAWABLES_LAYER_SOURCE = (
+    MLN_LAYER_BACKGROUND_DRAWABLES_SOURCE +
+    MLN_LAYER_CIRCLE_DRAWABLES_SOURCE +
+    MLN_LAYER_COLOR_RELIEF_DRAWABLES_SOURCE +
+    MLN_LAYER_CUSTOM_DRAWABLES_SOURCE +
+    MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_SOURCE +
+    MLN_LAYER_FILL_DRAWABLES_SOURCE +
+    MLN_LAYER_FILL_EXTRUSION_DRAWABLES_SOURCE +
+    MLN_LAYER_HEATMAP_DRAWABLES_SOURCE +
+    MLN_LAYER_HILLSHADE_DRAWABLES_SOURCE +
+    MLN_LAYER_LINE_DRAWABLES_SOURCE +
+    MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_SOURCE +
+    MLN_LAYER_RASTER_DRAWABLES_SOURCE +
+    MLN_LAYER_SYMBOL_DRAWABLES_SOURCE
+)
+
+MLN_DRAWABLES_COMMON_SOURCE = _without(MLN_DRAWABLES_SOURCE, MLN_DRAWABLES_LAYER_SOURCE)
+
 MLN_DRAWABLES_HEADERS = [
     "include/mbgl/gfx/drawable.hpp",
     "include/mbgl/gfx/drawable_data.hpp",
@@ -1019,6 +1547,82 @@ MLN_DRAWABLES_HEADERS = [
     "include/mbgl/style/layers/custom_drawable_layer.hpp",
     "include/mbgl/layermanager/custom_drawable_layer_factory.hpp",
 ]
+
+MLN_LAYER_BACKGROUND_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/background_layer_ubo.hpp",
+]
+
+MLN_LAYER_CIRCLE_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/circle_layer_ubo.hpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/color_relief_layer_ubo.hpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLES_HEADERS = [
+    "include/mbgl/gfx/drawable_custom_layer_host_tweaker.hpp",
+    "include/mbgl/shaders/custom_geometry_ubo.hpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/custom_drawable_layer_ubo.hpp",
+    "include/mbgl/style/layers/custom_drawable_layer.hpp",
+    "include/mbgl/layermanager/custom_drawable_layer_factory.hpp",
+]
+
+MLN_LAYER_FILL_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/fill_layer_ubo.hpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/fill_extrusion_layer_ubo.hpp",
+]
+
+MLN_LAYER_HEATMAP_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/heatmap_layer_ubo.hpp",
+    "include/mbgl/shaders/heatmap_texture_layer_ubo.hpp",
+]
+
+MLN_LAYER_HILLSHADE_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/hillshade_layer_ubo.hpp",
+    "include/mbgl/shaders/hillshade_prepare_layer_ubo.hpp",
+]
+
+MLN_LAYER_LINE_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/line_layer_ubo.hpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/location_indicator_ubo.hpp",
+]
+
+MLN_LAYER_RASTER_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/raster_layer_ubo.hpp",
+]
+
+MLN_LAYER_SYMBOL_DRAWABLES_HEADERS = [
+    "include/mbgl/shaders/collision_layer_ubo.hpp",
+    "include/mbgl/shaders/symbol_layer_ubo.hpp",
+]
+
+MLN_DRAWABLES_LAYER_HEADERS = (
+    MLN_LAYER_BACKGROUND_DRAWABLES_HEADERS +
+    MLN_LAYER_CIRCLE_DRAWABLES_HEADERS +
+    MLN_LAYER_COLOR_RELIEF_DRAWABLES_HEADERS +
+    MLN_LAYER_CUSTOM_DRAWABLES_HEADERS +
+    MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_HEADERS +
+    MLN_LAYER_FILL_DRAWABLES_HEADERS +
+    MLN_LAYER_FILL_EXTRUSION_DRAWABLES_HEADERS +
+    MLN_LAYER_HEATMAP_DRAWABLES_HEADERS +
+    MLN_LAYER_HILLSHADE_DRAWABLES_HEADERS +
+    MLN_LAYER_LINE_DRAWABLES_HEADERS +
+    MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_HEADERS +
+    MLN_LAYER_RASTER_DRAWABLES_HEADERS +
+    MLN_LAYER_SYMBOL_DRAWABLES_HEADERS
+)
+
+MLN_DRAWABLES_COMMON_HEADERS = _without(MLN_DRAWABLES_HEADERS, MLN_DRAWABLES_LAYER_HEADERS)
 
 MLN_DRAWABLES_GL_SOURCE = [
     "src/mbgl/gl/buffer_allocator.cpp",
@@ -1091,6 +1695,81 @@ MLN_DRAWABLES_MTL_SOURCE = [
     "src/mbgl/style/layers/mtl/custom_layer_render_parameters.cpp",
 ]
 
+MLN_LAYER_BACKGROUND_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/background.cpp",
+]
+
+MLN_LAYER_CIRCLE_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/circle.cpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/color_relief.cpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/custom_geometry.cpp",
+    "src/mbgl/style/layers/mtl/custom_layer_render_parameters.cpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/custom_symbol_icon.cpp",
+    "src/mbgl/shaders/mtl/widevector.cpp",
+]
+
+MLN_LAYER_FILL_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/fill.cpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/fill_extrusion.cpp",
+]
+
+MLN_LAYER_HEATMAP_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/heatmap.cpp",
+    "src/mbgl/shaders/mtl/heatmap_texture.cpp",
+]
+
+MLN_LAYER_HILLSHADE_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/hillshade.cpp",
+    "src/mbgl/shaders/mtl/hillshade_prepare.cpp",
+]
+
+MLN_LAYER_LINE_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/line.cpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/location_indicator.cpp",
+]
+
+MLN_LAYER_RASTER_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/raster.cpp",
+]
+
+MLN_LAYER_SYMBOL_DRAWABLES_MTL_SOURCE = [
+    "src/mbgl/shaders/mtl/collision.cpp",
+    "src/mbgl/shaders/mtl/symbol.cpp",
+]
+
+MLN_DRAWABLES_MTL_LAYER_SOURCE = (
+    MLN_LAYER_BACKGROUND_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_CIRCLE_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_COLOR_RELIEF_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_CUSTOM_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_FILL_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_FILL_EXTRUSION_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_HEATMAP_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_HILLSHADE_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_LINE_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_RASTER_DRAWABLES_MTL_SOURCE +
+    MLN_LAYER_SYMBOL_DRAWABLES_MTL_SOURCE
+)
+
+MLN_DRAWABLES_MTL_COMMON_SOURCE = _without(MLN_DRAWABLES_MTL_SOURCE, MLN_DRAWABLES_MTL_LAYER_SOURCE)
+
 MLN_DRAWABLES_MTL_HEADERS = [
     "include/mbgl/mtl/buffer_resource.hpp",
     "include/mbgl/mtl/command_encoder.hpp",
@@ -1135,6 +1814,80 @@ MLN_DRAWABLES_MTL_HEADERS = [
     "include/mbgl/style/layers/mtl/custom_layer_render_parameters.hpp",
     "include/mbgl/shaders/mtl/widevector.hpp",
 ]
+
+MLN_LAYER_BACKGROUND_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/background.hpp",
+]
+
+MLN_LAYER_CIRCLE_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/circle.hpp",
+]
+
+MLN_LAYER_COLOR_RELIEF_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/color_relief.hpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/custom_geometry.hpp",
+]
+
+MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/custom_symbol_icon.hpp",
+    "include/mbgl/shaders/mtl/widevector.hpp",
+]
+
+MLN_LAYER_FILL_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/fill.hpp",
+]
+
+MLN_LAYER_FILL_EXTRUSION_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/fill_extrusion.hpp",
+]
+
+MLN_LAYER_HEATMAP_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/heatmap.hpp",
+    "include/mbgl/shaders/mtl/heatmap_texture.hpp",
+]
+
+MLN_LAYER_HILLSHADE_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/hillshade.hpp",
+    "include/mbgl/shaders/mtl/hillshade_prepare.hpp",
+]
+
+MLN_LAYER_LINE_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/line.hpp",
+]
+
+MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/location_indicator.hpp",
+]
+
+MLN_LAYER_RASTER_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/raster.hpp",
+]
+
+MLN_LAYER_SYMBOL_DRAWABLES_MTL_HEADERS = [
+    "include/mbgl/shaders/mtl/collision.hpp",
+    "include/mbgl/shaders/mtl/symbol.hpp",
+]
+
+MLN_DRAWABLES_MTL_LAYER_HEADERS = (
+    MLN_LAYER_BACKGROUND_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_CIRCLE_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_COLOR_RELIEF_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_CUSTOM_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_CUSTOM_DRAWABLE_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_FILL_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_FILL_EXTRUSION_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_HEATMAP_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_HILLSHADE_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_LINE_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_LOCATION_INDICATOR_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_RASTER_DRAWABLES_MTL_HEADERS +
+    MLN_LAYER_SYMBOL_DRAWABLES_MTL_HEADERS
+)
+
+MLN_DRAWABLES_MTL_COMMON_HEADERS = _without(MLN_DRAWABLES_MTL_HEADERS, MLN_DRAWABLES_MTL_LAYER_HEADERS)
 
 MLN_DRAWABLES_WEBGPU_SOURCE = [
     "src/mbgl/webgpu/buffer_resource.cpp",

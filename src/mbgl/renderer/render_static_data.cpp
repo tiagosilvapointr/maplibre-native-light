@@ -38,6 +38,7 @@ gfx::VertexVector<RasterLayoutVertex> RenderStaticData::rasterVertices() {
     return vertices;
 }
 
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
 gfx::VertexVector<HeatmapTextureLayoutVertex> RenderStaticData::heatmapTextureVertices() {
     gfx::VertexVector<HeatmapTextureLayoutVertex> vertices;
     vertices.emplace_back(HeatmapBucket::textureVertex({0, 0}));
@@ -46,15 +47,18 @@ gfx::VertexVector<HeatmapTextureLayoutVertex> RenderStaticData::heatmapTextureVe
     vertices.emplace_back(HeatmapBucket::textureVertex({1, 1}));
     return vertices;
 }
+#endif
 
+#if !defined(MBGL_LAYER_FILL_EXTRUSION_DISABLE_ALL)
 gfx::VertexVector<FillExtrusionStaticVertex> RenderStaticData::fillExtrusionVertices() {
-    gfx::VertexVector<HeatmapTextureLayoutVertex> vertices;
+    gfx::VertexVector<FillExtrusionStaticVertex> vertices;
     vertices.emplace_back(FillExtrusionStaticVertex{1, 0});
     vertices.emplace_back(FillExtrusionStaticVertex{1, 1});
     vertices.emplace_back(FillExtrusionStaticVertex{0, 0});
     vertices.emplace_back(FillExtrusionStaticVertex{0, 1});
     return vertices;
 }
+#endif
 
 gfx::IndexVector<gfx::Triangles> RenderStaticData::quadTriangleIndices() {
     gfx::IndexVector<gfx::Triangles> indices;
@@ -73,6 +77,7 @@ gfx::IndexVector<gfx::LineStrip> RenderStaticData::tileLineStripIndices() {
     return indices;
 }
 
+#if !defined(MBGL_LAYER_FILL_EXTRUSION_DISABLE_ALL)
 gfx::IndexVector<gfx::Triangles> RenderStaticData::fillExtrusionTriangleIndices() {
     gfx::IndexVector<gfx::Triangles> indices;
     // ┌──────┐
@@ -84,6 +89,7 @@ gfx::IndexVector<gfx::Triangles> RenderStaticData::fillExtrusionTriangleIndices(
     indices.emplace_back(1, 2, 3);
     return indices;
 }
+#endif
 
 SegmentVector RenderStaticData::tileTriangleSegments() {
     SegmentVector segments;
@@ -103,16 +109,20 @@ SegmentVector RenderStaticData::rasterSegments() {
     return segments;
 }
 
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
 SegmentVector RenderStaticData::heatmapTextureSegments() {
     SegmentVector segments;
     segments.emplace_back(0, 0, 4, 6);
     return segments;
 }
+#endif
 
+#if !defined(MBGL_LAYER_FILL_EXTRUSION_DISABLE_ALL)
 SegmentVector RenderStaticData::fillExtrusionSegments() {
     SegmentVector segments;
     segments.emplace_back(0, 0, 4, 6);
     return segments;
 }
+#endif
 
 } // namespace mbgl

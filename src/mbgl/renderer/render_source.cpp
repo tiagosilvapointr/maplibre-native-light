@@ -3,11 +3,18 @@
 #include <mbgl/annotation/render_annotation_source.hpp>
 #include <mbgl/layermanager/layer_manager.hpp>
 #include <mbgl/renderer/render_source_observer.hpp>
+#include <mbgl/renderer/render_tile.hpp>
 #include <mbgl/renderer/sources/render_geojson_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/renderer/sources/render_raster_source.hpp>
+#endif
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
 #include <mbgl/renderer/sources/render_raster_dem_source.hpp>
+#endif
 #include <mbgl/renderer/sources/render_vector_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/renderer/sources/render_image_source.hpp>
+#endif
 #include <mbgl/renderer/sources/render_custom_geometry_source.hpp>
 #include <mbgl/renderer/tile_parameters.hpp>
 #include <mbgl/tile/tile.hpp>
@@ -28,11 +35,21 @@ std::unique_ptr<RenderSource> RenderSource::create(const Immutable<Source::Impl>
             return std::make_unique<RenderVectorSource>(staticImmutableCast<TileSource::Impl>(impl),
                                                         std::move(threadPool_));
         case SourceType::Raster:
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
             return std::make_unique<RenderRasterSource>(staticImmutableCast<TileSource::Impl>(impl),
                                                         std::move(threadPool_));
+#else
+            assert(false);
+            return nullptr;
+#endif
         case SourceType::RasterDEM:
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
             return std::make_unique<RenderRasterDEMSource>(staticImmutableCast<TileSource::Impl>(impl),
                                                            std::move(threadPool_));
+#else
+            assert(false);
+            return nullptr;
+#endif
         case SourceType::GeoJSON:
             return std::make_unique<RenderGeoJSONSource>(staticImmutableCast<GeoJSONSource::Impl>(impl),
                                                          std::move(threadPool_));
@@ -48,7 +65,12 @@ std::unique_ptr<RenderSource> RenderSource::create(const Immutable<Source::Impl>
                 return nullptr;
             }
         case SourceType::Image:
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
             return std::make_unique<RenderImageSource>(staticImmutableCast<ImageSource::Impl>(impl));
+#else
+            assert(false);
+            return nullptr;
+#endif
         case SourceType::CustomVector:
             return std::make_unique<RenderCustomGeometrySource>(staticImmutableCast<CustomGeometrySource::Impl>(impl),
                                                                 std::move(threadPool_));

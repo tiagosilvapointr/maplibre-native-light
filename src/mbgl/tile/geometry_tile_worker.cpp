@@ -9,10 +9,6 @@
 #include <mbgl/renderer/group_by_layout.hpp>
 #include <mbgl/style/filter.hpp>
 #include <mbgl/style/layers/symbol_layer_impl.hpp>
-#include <mbgl/renderer/layers/render_fill_layer.hpp>
-#include <mbgl/renderer/layers/render_fill_extrusion_layer.hpp>
-#include <mbgl/renderer/layers/render_line_layer.hpp>
-#include <mbgl/renderer/layers/render_symbol_layer.hpp>
 #include <mbgl/renderer/buckets/symbol_bucket.hpp>
 #include <mbgl/util/instrumentation.hpp>
 #include <mbgl/util/logging.hpp>

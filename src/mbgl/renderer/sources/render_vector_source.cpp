@@ -3,7 +3,9 @@
 #include <mbgl/renderer/render_tile.hpp>
 #include <mbgl/renderer/paint_parameters.hpp>
 #include <mbgl/renderer/tile_parameters.hpp>
+#if defined(MLN_WITH_MLT)
 #include <mbgl/tile/vector_mlt_tile.hpp>
+#endif
 #include <mbgl/tile/vector_mvt_tile.hpp>
 
 namespace mbgl {
@@ -32,6 +34,7 @@ void RenderVectorSource::updateInternal(const Tileset& tileset,
         tileset.zoomRange,
         tileset.bounds,
         [&](const OverscaledTileID& tileID, TileObserver* observer_) -> std::unique_ptr<VectorTile> {
+#if defined(MLN_WITH_MLT)
             if (!isMLT.has_value()) {
                 auto impl = staticImmutableCast<style::TileSource::Impl>(baseImpl);
                 assert(impl->tileset); // we should have one by now
@@ -41,9 +44,9 @@ void RenderVectorSource::updateInternal(const Tileset& tileset,
             }
             if (isMLT && *isMLT) {
                 return std::make_unique<VectorMLTTile>(tileID, baseImpl->id, parameters, tileset, observer_);
-            } else {
-                return std::make_unique<VectorMVTTile>(tileID, baseImpl->id, parameters, tileset, observer_);
             }
+#endif
+            return std::make_unique<VectorMVTTile>(tileID, baseImpl->id, parameters, tileset, observer_);
         });
 }
 

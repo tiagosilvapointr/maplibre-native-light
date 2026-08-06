@@ -1,0 +1,3 @@
+variant	binary_bytes	nsyms	string_table_offset	string_table_bytes	non_empty_strings	total_string_payload_bytes	nul_and_padding_bytes	largest_string_bytes	strings_ge_100_bytes	strings_ge_500_bytes	strings_ge_1000_bytes	string_table_tsv	binary
+baseline-unstripped	15896552	233450	9815440	6081112	59825	6021283	59829	1659	21117	873	150	ios-linkedit-string-table-baseline.tsv	ios-layer-size-reports/20260604-213905/baseline/extract/MapLibre.xcframework/ios-arm64/MapLibre.framework/MapLibre
+baseline-stripped	6303448	3724	6139824	163624	3724	159890	3734	301	71	0	0	ios-linkedit-string-table-baseline-stripped.tsv	ios-layer-size-reports/20260604-213905/baseline/MapLibre.stripped

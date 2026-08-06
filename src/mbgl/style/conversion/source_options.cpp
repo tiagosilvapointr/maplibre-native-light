@@ -16,12 +16,20 @@ std::optional<SourceOptions> Converter<SourceOptions>::operator()(const Converti
             return {{.rasterEncoding = Tileset::RasterEncoding::Mapbox}};
         } else if (encoding && *encoding == "mvt") {
             return {{.vectorEncoding = Tileset::VectorEncoding::Mapbox}};
+#if defined(MLN_WITH_MLT)
         } else if (encoding && *encoding == "mlt") {
             return {{.vectorEncoding = Tileset::VectorEncoding::MLT}};
+#endif
         } else {
+#if defined(MLN_WITH_MLT)
             error.message =
                 "invalid encoding - valid types are 'mapbox' and 'terrarium' for raster sources, 'mvt' and 'mlt' for "
                 "vector sources";
+#else
+            error.message =
+                "invalid encoding - valid types are 'mapbox' and 'terrarium' for raster sources and 'mvt' for vector "
+                "sources";
+#endif
             return std::nullopt;
         }
     }

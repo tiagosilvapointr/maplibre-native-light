@@ -1,6 +1,7 @@
 load("@aspect_rules_js//js:defs.bzl", "js_binary")
 load("@rules_cc//cc:defs.bzl", "objc_library")
 load("//bazel:flags.bzl", "CPP_FLAGS", "MAPLIBRE_FLAGS", "WARNING_FLAGS")
+load("//bazel:layer_flags.bzl", "if_layer_enabled", "layer_disable_defines")
 
 objc_library(
     name = "macos-objcpp",
@@ -88,11 +89,9 @@ objc_library(
         "//platform/ios:ios_private_hdrs",
         "//platform/ios:ios_public_hdrs",
         "//platform/ios:ios_sdk_hdrs",
-    ] + select({
-        "//conditions:default": [
-            "//platform/darwin:darwin_objcpp_custom_drawable_srcs",
-        ],
-    }),
+    ] + if_layer_enabled("custom_drawable", [
+        "//platform/darwin:darwin_objcpp_custom_drawable_srcs",
+    ]),
     copts = CPP_FLAGS + MAPLIBRE_FLAGS + [
         "-fcxx-modules",
         "-fmodules",
@@ -102,7 +101,7 @@ objc_library(
         "-Wno-gnu-statement-expression",
         "-Wno-deprecated-declarations",
     ],
-    defines = ["GLES_SILENCE_DEPRECATION=1"],
+    defines = ["GLES_SILENCE_DEPRECATION=1"] + layer_disable_defines(),
     includes = [
         "darwin/include",
     ],
@@ -154,6 +153,7 @@ objc_library(
         "-Wno-gnu-conditional-omitted-operand",
         "-Wno-deprecated-declarations",
     ],
+    defines = layer_disable_defines(),
     includes = [
         "darwin/include",
     ],

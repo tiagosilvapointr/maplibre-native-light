@@ -6,10 +6,16 @@
 #include <mbgl/style/conversion/tileset.hpp>
 #include <mbgl/style/conversion_impl.hpp>
 #include <mbgl/style/sources/geojson_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/style/sources/raster_source.hpp>
+#endif
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
 #include <mbgl/style/sources/raster_dem_source.hpp>
+#endif
 #include <mbgl/style/sources/vector_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/style/sources/image_source.hpp>
+#endif
 #include <mbgl/util/geo.hpp>
 
 namespace mbgl {
@@ -37,6 +43,7 @@ std::optional<variant<std::string, Tileset>> convertURLOrTileset(const Convertib
     return {std::move(*url)};
 }
 
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 std::optional<std::unique_ptr<Source>> convertRasterSource(const std::string& id,
                                                            const Convertible& value,
                                                            Error& error) {
@@ -58,7 +65,9 @@ std::optional<std::unique_ptr<Source>> convertRasterSource(const std::string& id
 
     return {std::make_unique<RasterSource>(id, std::move(*urlOrTileset), tileSize)};
 }
+#endif
 
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
 std::optional<std::unique_ptr<Source>> convertRasterDEMSource(const std::string& id,
                                                               const Convertible& value,
                                                               Error& error) {
@@ -87,6 +96,7 @@ std::optional<std::unique_ptr<Source>> convertRasterDEMSource(const std::string&
 
     return {std::make_unique<RasterDEMSource>(id, std::move(*urlOrTileset), tileSize, options)};
 }
+#endif
 
 std::optional<std::unique_ptr<Source>> convertVectorSource(const std::string& id,
                                                            const Convertible& value,
@@ -119,8 +129,10 @@ std::optional<std::unique_ptr<Source>> convertVectorSource(const std::string& id
         const auto encodingStr = toString(*encodingValue);
         if (encodingStr && encodingStr == "mvt") {
             encoding = Tileset::VectorEncoding::Mapbox;
+#if defined(MLN_WITH_MLT)
         } else if (encodingStr && encodingStr == "mlt") {
             encoding = Tileset::VectorEncoding::MLT;
+#endif
         } else {
             error.message = "invalid encoding";
             return std::nullopt;
@@ -161,6 +173,7 @@ std::optional<std::unique_ptr<Source>> convertGeoJSONSource(const std::string& i
     return {std::move(result)};
 }
 
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 std::optional<std::unique_ptr<Source>> convertImageSource(const std::string& id,
                                                           const Convertible& value,
                                                           Error& error) {
@@ -202,6 +215,7 @@ std::optional<std::unique_ptr<Source>> convertImageSource(const std::string& id,
 
     return {std::move(result)};
 }
+#endif
 } // namespace
 
 std::optional<std::unique_ptr<Source>> Converter<std::unique_ptr<Source>>::operator()(const Convertible& value,
@@ -225,15 +239,30 @@ std::optional<std::unique_ptr<Source>> Converter<std::unique_ptr<Source>>::opera
     }
     const std::string& tname = type.value();
     if (tname == "raster") {
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
         return convertRasterSource(id, value, error);
+#else
+        error.message = "source type is disabled";
+        return std::nullopt;
+#endif
     } else if (tname == "raster-dem") {
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
         return convertRasterDEMSource(id, value, error);
+#else
+        error.message = "source type is disabled";
+        return std::nullopt;
+#endif
     } else if (tname == "vector") {
         return convertVectorSource(id, value, error);
     } else if (tname == "geojson") {
         return convertGeoJSONSource(id, value, error);
     } else if (tname == "image") {
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
         return convertImageSource(id, value, error);
+#else
+        error.message = "source type is disabled";
+        return std::nullopt;
+#endif
     } else {
         error.message = "invalid source type";
         return std::nullopt;

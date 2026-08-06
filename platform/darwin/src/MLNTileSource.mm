@@ -2,7 +2,9 @@
 
 #import "MLNAttributionInfo_Private.h"
 #import "MLNGeometry_Private.h"
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
 #import "MLNRasterDEMSource.h"
+#endif
 #import "MLNVectorTileSource.h"
 #import "NSString+MLNAdditions.h"
 #import "NSValue+MLNAdditions.h"
@@ -146,6 +148,7 @@ mbgl::Tileset MLNTileSetFromTileURLTemplates(
     }
   }
 
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
   NSNumber *encodingNumber = options[MLNTileSourceOptionDEMEncoding];
   if (encodingNumber) {
     if (![encodingNumber isKindOfClass:[NSValue class]]) {
@@ -164,21 +167,27 @@ mbgl::Tileset MLNTileSetFromTileURLTemplates(
     }
   }
 
-  encodingNumber = options[MLNVectorTileSourceOptionEncoding];
-  if (encodingNumber) {
-    if (![encodingNumber isKindOfClass:[NSValue class]]) {
+#endif
+  NSNumber *vectorEncodingNumber = options[MLNVectorTileSourceOptionEncoding];
+  if (vectorEncodingNumber) {
+    if (![vectorEncodingNumber isKindOfClass:[NSValue class]]) {
       [NSException
            raise:NSInvalidArgumentException
           format:@"MLNTileSourceOptionVectorEncoding must be set to an NSValue or NSNumber."];
     }
     MLNVectorTileSourceEncoding encoding;
-    [encodingNumber getValue:&encoding];
+    [vectorEncodingNumber getValue:&encoding];
     switch (encoding) {
       case MLNVectorTileSourceEncodingMapbox:
         tileSet.vectorEncoding = mbgl::Tileset::VectorEncoding::Mapbox;
         break;
       case MLNVectorTileSourceEncodingMLT:
+#if defined(MLN_WITH_MLT)
         tileSet.vectorEncoding = mbgl::Tileset::VectorEncoding::MLT;
+#else
+        [NSException raise:NSInvalidArgumentException
+                    format:@"MLT vector tile encoding is not available in this build."];
+#endif
         break;
     }
   }

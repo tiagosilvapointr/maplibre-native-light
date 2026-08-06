@@ -7,27 +7,134 @@ load(
 load("//bazel:flags.bzl", "CPP_FLAGS", "MAPLIBRE_FLAGS", "WARNING_FLAGS")
 load(
     "bazel/files.bzl",
+    "MLN_DARWIN_COMMON_PRIVATE_HEADERS",
     "MLN_DARWIN_OBJCPP_HEADERS",
+    "MLN_DARWIN_OBJC_COMMON_HEADERS",
     "MLN_DARWIN_OBJC_HEADERS",
+    "MLN_DARWIN_PUBLIC_OBJCPP_COMMON_SOURCE",
     "MLN_DARWIN_PRIVATE_HEADERS",
     "MLN_DARWIN_PUBLIC_OBJCPP_CUSTOM_DRAWABLE_SOURCE",
     "MLN_DARWIN_PUBLIC_OBJCPP_SOURCE",
     "MLN_DARWIN_PUBLIC_OBJC_SOURCE",
+    "MLN_GENERATED_DARWIN_STYLE_HEADERS_COMMON",
     "MLN_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS_COMMON",
     "MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_GENERATED_DARWIN_STYLE_SOURCE_COMMON",
     "MLN_GENERATED_DARWIN_STYLE_SOURCE",
     "MLN_GENERATED_DARWIN_TEST_CODE",
+    "MLN_LAYER_BACKGROUND_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_BACKGROUND_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_BACKGROUND_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_CIRCLE_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_CIRCLE_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_CIRCLE_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_COLOR_RELIEF_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_COLOR_RELIEF_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_COLOR_RELIEF_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_CUSTOM_DARWIN_OBJC_HEADERS",
+    "MLN_LAYER_CUSTOM_DARWIN_PRIVATE_HEADERS",
+    "MLN_LAYER_CUSTOM_DARWIN_PUBLIC_OBJCPP_SOURCE",
+    "MLN_LAYER_CUSTOM_DRAWABLE_DARWIN_OBJC_HEADERS",
+    "MLN_LAYER_FILL_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_FILL_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_FILL_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_FILL_EXTRUSION_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_FILL_EXTRUSION_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_FILL_EXTRUSION_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_HEATMAP_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_HEATMAP_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_HEATMAP_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_HILLSHADE_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_HILLSHADE_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_HILLSHADE_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_LINE_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_LINE_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_LINE_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_PLUGIN_DARWIN_OBJC_HEADERS",
+    "MLN_LAYER_PLUGIN_DARWIN_PRIVATE_HEADERS",
+    "MLN_LAYER_PLUGIN_DARWIN_PUBLIC_OBJCPP_SOURCE",
+    "MLN_LAYER_RASTER_DARWIN_OBJC_HEADERS",
+    "MLN_LAYER_RASTER_DARWIN_PUBLIC_OBJCPP_SOURCE",
+    "MLN_LAYER_RASTER_DEM_DARWIN_OBJC_HEADERS",
+    "MLN_LAYER_RASTER_DEM_DARWIN_PUBLIC_OBJCPP_SOURCE",
+    "MLN_LAYER_RASTER_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_RASTER_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_RASTER_GENERATED_DARWIN_STYLE_SOURCE",
+    "MLN_LAYER_RASTER_SHARED_DARWIN_OBJC_HEADERS",
+    "MLN_LAYER_RASTER_SHARED_DARWIN_PRIVATE_HEADERS",
+    "MLN_LAYER_RASTER_SHARED_DARWIN_PUBLIC_OBJCPP_SOURCE",
+    "MLN_LAYER_SYMBOL_GENERATED_DARWIN_STYLE_HEADERS",
+    "MLN_LAYER_SYMBOL_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS",
+    "MLN_LAYER_SYMBOL_GENERATED_DARWIN_STYLE_SOURCE",
 )
+load("//bazel:layer_flags.bzl", "if_layer_enabled", "if_raster_source_enabled", "layer_disable_defines")
+
+_GENERATED_STYLE_SOURCE = MLN_GENERATED_DARWIN_STYLE_SOURCE_COMMON + \
+                          if_layer_enabled("background", MLN_LAYER_BACKGROUND_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("circle", MLN_LAYER_CIRCLE_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("fill", MLN_LAYER_FILL_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("line", MLN_LAYER_LINE_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("raster", MLN_LAYER_RASTER_GENERATED_DARWIN_STYLE_SOURCE) + \
+                          if_layer_enabled("symbol", MLN_LAYER_SYMBOL_GENERATED_DARWIN_STYLE_SOURCE)
+
+_GENERATED_STYLE_HEADERS = MLN_GENERATED_DARWIN_STYLE_HEADERS_COMMON + \
+                           if_layer_enabled("background", MLN_LAYER_BACKGROUND_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("circle", MLN_LAYER_CIRCLE_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("fill", MLN_LAYER_FILL_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("line", MLN_LAYER_LINE_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("raster", MLN_LAYER_RASTER_GENERATED_DARWIN_STYLE_HEADERS) + \
+                           if_layer_enabled("symbol", MLN_LAYER_SYMBOL_GENERATED_DARWIN_STYLE_HEADERS)
+
+_GENERATED_STYLE_PUBLIC_HEADERS = MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS_COMMON + \
+                                  if_layer_enabled("background", MLN_LAYER_BACKGROUND_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("circle", MLN_LAYER_CIRCLE_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("color_relief", MLN_LAYER_COLOR_RELIEF_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("fill", MLN_LAYER_FILL_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("fill_extrusion", MLN_LAYER_FILL_EXTRUSION_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("heatmap", MLN_LAYER_HEATMAP_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("hillshade", MLN_LAYER_HILLSHADE_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("line", MLN_LAYER_LINE_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("raster", MLN_LAYER_RASTER_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS) + \
+                                  if_layer_enabled("symbol", MLN_LAYER_SYMBOL_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS)
+
+_DARWIN_OBJC_HEADERS = MLN_DARWIN_OBJC_COMMON_HEADERS + \
+                       if_layer_enabled("custom", MLN_LAYER_CUSTOM_DARWIN_OBJC_HEADERS) + \
+                       if_layer_enabled("custom_drawable", MLN_LAYER_CUSTOM_DRAWABLE_DARWIN_OBJC_HEADERS) + \
+                       if_layer_enabled("plugin", MLN_LAYER_PLUGIN_DARWIN_OBJC_HEADERS) + \
+                       if_layer_enabled("raster", MLN_LAYER_RASTER_DARWIN_OBJC_HEADERS) + \
+                       if_layer_enabled("raster_dem", MLN_LAYER_RASTER_DEM_DARWIN_OBJC_HEADERS) + \
+                       if_raster_source_enabled(MLN_LAYER_RASTER_SHARED_DARWIN_OBJC_HEADERS)
+
+_DARWIN_PRIVATE_HEADERS = MLN_DARWIN_COMMON_PRIVATE_HEADERS + \
+                          if_layer_enabled("custom", MLN_LAYER_CUSTOM_DARWIN_PRIVATE_HEADERS) + \
+                          if_layer_enabled("plugin", MLN_LAYER_PLUGIN_DARWIN_PRIVATE_HEADERS) + \
+                          if_raster_source_enabled(MLN_LAYER_RASTER_SHARED_DARWIN_PRIVATE_HEADERS)
+
+_DARWIN_PUBLIC_OBJCPP_SOURCE = MLN_DARWIN_PUBLIC_OBJCPP_COMMON_SOURCE + \
+                               if_layer_enabled("custom", MLN_LAYER_CUSTOM_DARWIN_PUBLIC_OBJCPP_SOURCE) + \
+                               if_layer_enabled("plugin", MLN_LAYER_PLUGIN_DARWIN_PUBLIC_OBJCPP_SOURCE) + \
+                               if_layer_enabled("raster", MLN_LAYER_RASTER_DARWIN_PUBLIC_OBJCPP_SOURCE) + \
+                               if_layer_enabled("raster_dem", MLN_LAYER_RASTER_DEM_DARWIN_PUBLIC_OBJCPP_SOURCE) + \
+                               if_raster_source_enabled(MLN_LAYER_RASTER_SHARED_DARWIN_PUBLIC_OBJCPP_SOURCE)
 
 filegroup(
     name = "darwin_private_hdrs",
-    srcs = MLN_DARWIN_PRIVATE_HEADERS,
+    srcs = _DARWIN_PRIVATE_HEADERS,
     visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "darwin_objc_hdrs",
-    srcs = MLN_DARWIN_OBJC_HEADERS,
+    srcs = _DARWIN_OBJC_HEADERS,
     visibility = ["//visibility:public"],
 )
 
@@ -39,13 +146,13 @@ filegroup(
 
 filegroup(
     name = "darwin_objcpp_srcs",
-    srcs = MLN_DARWIN_PUBLIC_OBJCPP_SOURCE,
+    srcs = _DARWIN_PUBLIC_OBJCPP_SOURCE,
     visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "darwin_objcpp_custom_drawable_srcs",
-    srcs = MLN_DARWIN_PUBLIC_OBJCPP_CUSTOM_DRAWABLE_SOURCE,
+    srcs = if_layer_enabled("custom_drawable", MLN_DARWIN_PUBLIC_OBJCPP_CUSTOM_DRAWABLE_SOURCE),
     visibility = ["//visibility:public"],
 )
 
@@ -57,19 +164,19 @@ filegroup(
 
 filegroup(
     name = "generated_style_srcs",
-    srcs = MLN_GENERATED_DARWIN_STYLE_SOURCE,
+    srcs = _GENERATED_STYLE_SOURCE,
     visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "generated_style_hdrs",
-    srcs = MLN_GENERATED_DARWIN_STYLE_HEADERS,
+    srcs = _GENERATED_STYLE_HEADERS,
     visibility = ["//visibility:public"],
 )
 
 filegroup(
     name = "generated_style_public_hdrs",
-    srcs = MLN_GENERATED_DARWIN_STYLE_PUBLIC_HEADERS,
+    srcs = _GENERATED_STYLE_PUBLIC_HEADERS,
     visibility = ["//visibility:public"],
 )
 
@@ -221,7 +328,7 @@ objc_library(
     defines = [
         "GLES_SILENCE_DEPRECATION=1",
         "GL_SILENCE_DEPRECATION=1",
-    ],
+    ] + layer_disable_defines(),
     includes = [
         "include",
     ],
@@ -259,6 +366,7 @@ objc_library(
         "-Wno-vla-extension",
         "-Wno-gnu-conditional-omitted-operand",
     ],
+    defines = layer_disable_defines(),
     includes = [
         "include",
         "src",

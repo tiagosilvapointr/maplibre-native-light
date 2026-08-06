@@ -1,5 +1,4 @@
 #include <mbgl/renderer/buckets/hillshade_bucket.hpp>
-#include <mbgl/renderer/layers/render_hillshade_layer.hpp>
 #include <mbgl/gfx/context.hpp>
 
 namespace mbgl {

@@ -9,9 +9,11 @@
 #include <string>
 #include <vector>
 
+#if defined(MLN_WITH_MLT)
 namespace mlt {
 class MapLibreTile;
 }
+#endif
 namespace mbgl {
 
 class CanonicalTileID;
@@ -48,15 +50,19 @@ public:
     GeometryCollection clone() const { return GeometryCollection(*this); }
 
     const auto& getTriangles() const { return triangles; }
+#if defined(MLN_WITH_MLT)
     void setTriangles(std::shared_ptr<const mlt::MapLibreTile> owner, std::span<const std::uint32_t> triangles_) {
         triangleOwner = std::move(owner);
         triangles = triangles_;
     }
+#endif
 
 private:
     GeometryCollection(const GeometryCollection&) = default;
 
+#if defined(MLN_WITH_MLT)
     std::shared_ptr<const mlt::MapLibreTile> triangleOwner;
+#endif
     std::span<const std::uint32_t> triangles = {};
 };
 

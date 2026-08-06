@@ -5,10 +5,16 @@
 #include <mbgl/storage/http_file_source.hpp>
 #include <mbgl/style/parser.hpp>
 #include <mbgl/style/sources/vector_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/style/sources/raster_source.hpp>
+#endif
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
 #include <mbgl/style/sources/raster_dem_source.hpp>
+#endif
 #include <mbgl/style/sources/geojson_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/style/sources/image_source.hpp>
+#endif
 #include <mbgl/style/conversion/json.hpp>
 #include <mbgl/style/conversion/tileset.hpp>
 #include <mbgl/style/sprite.hpp>
@@ -188,17 +194,27 @@ OfflineRegionStatus OfflineDownload::getStatus() const {
                 break;
             }
 
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
             case SourceType::Raster: {
                 const auto& rasterSource = *source->as<RasterSource>();
                 handleTiledSource(rasterSource.getURLOrTileset(), rasterSource.getTileSize());
                 break;
             }
+#else
+            case SourceType::Raster:
+                break;
+#endif
 
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
             case SourceType::RasterDEM: {
                 const auto& rasterDEMSource = *source->as<RasterDEMSource>();
                 handleTiledSource(rasterDEMSource.getURLOrTileset(), rasterDEMSource.getTileSize());
                 break;
             }
+#else
+            case SourceType::RasterDEM:
+                break;
+#endif
 
             case SourceType::GeoJSON: {
                 const auto& geojsonSource = *source->as<GeoJSONSource>();
@@ -208,6 +224,7 @@ OfflineRegionStatus OfflineDownload::getStatus() const {
                 break;
             }
 
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
             case SourceType::Image: {
                 const auto& imageSource = *source->as<ImageSource>();
                 if (imageSource.getURL()) {
@@ -215,6 +232,10 @@ OfflineRegionStatus OfflineDownload::getStatus() const {
                 }
                 break;
             }
+#else
+            case SourceType::Image:
+                break;
+#endif
 
             case SourceType::Video:
             case SourceType::Annotations:
@@ -301,17 +322,27 @@ void OfflineDownload::activateDownload() {
                     break;
                 }
 
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
                 case SourceType::Raster: {
                     const auto& rasterSource = *source->as<RasterSource>();
                     handleTiledSource(rasterSource.getURLOrTileset(), rasterSource.getTileSize());
                     break;
                 }
+#else
+                case SourceType::Raster:
+                    break;
+#endif
 
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
                 case SourceType::RasterDEM: {
                     const auto& rasterDEMSource = *source->as<RasterDEMSource>();
                     handleTiledSource(rasterDEMSource.getURLOrTileset(), rasterDEMSource.getTileSize());
                     break;
                 }
+#else
+                case SourceType::RasterDEM:
+                    break;
+#endif
 
                 case SourceType::GeoJSON: {
                     const auto& geojsonSource = *source->as<GeoJSONSource>();
@@ -321,6 +352,7 @@ void OfflineDownload::activateDownload() {
                     break;
                 }
 
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
                 case SourceType::Image: {
                     const auto& imageSource = *source->as<ImageSource>();
                     auto imageUrl = imageSource.getURL();
@@ -329,6 +361,10 @@ void OfflineDownload::activateDownload() {
                     }
                     break;
                 }
+#else
+                case SourceType::Image:
+                    break;
+#endif
 
                 case SourceType::Video:
                 case SourceType::Annotations:

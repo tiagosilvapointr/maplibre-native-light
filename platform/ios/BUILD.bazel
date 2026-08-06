@@ -24,6 +24,7 @@ load(
 )
 load("//platform/ios/bazel:macros.bzl", "info_plist")
 load("//platform/ios/bazel:provisioning.bzl", "configure_device_profiles")
+load("//bazel:layer_flags.bzl", "layer_disable_define_cmd")
 
 configure_device_profiles()
 
@@ -93,10 +94,12 @@ info_plist(
 genrule(
     name = "mln_defines",
     outs = ["MLNDefines.h"],
-    cmd = select({
-        "//:metal_renderer": "echo '#define MLN_RENDER_BACKEND_METAL 1' > $@",
-        "//conditions:default": "echo '' > $@",
-    }),
+    cmd = "printf '%s\\n' '#pragma once' > $@; " +
+          select({
+              "//:metal_renderer": "printf '%s\\n' '#define MLN_RENDER_BACKEND_METAL 1' >> $@; ",
+              "//conditions:default": "",
+          }) +
+          layer_disable_define_cmd(),
 )
 
 public_hdrs = [
