@@ -131,13 +131,14 @@ apple_static_xcframework(
 
 apple_bundle_version(
     name = "maplibre_ios_version",
-    build_label_pattern = "maplibre_ios_{version}",
-    build_version = "{version}",
+    build_label_pattern = "maplibre_ios_{short_version}{build_suffix}",
+    build_version = "{short_version}{build_suffix}",
     capture_groups = {
-        "version": "[0-9]+.[0-9]+.[0-9]+",
+        "short_version": "[0-9]+.[0-9]+.[0-9]+",
+        "build_suffix": "(.[0-9]+)?",
     },
-    fallback_build_label = "maplibre_ios_1.2.3456789",
-    short_version_string = "{version}",
+    fallback_build_label = "maplibre_ios_1.2.3",
+    short_version_string = "{short_version}",
 )
 
 apple_xcframework(
