@@ -19,7 +19,9 @@ NS_ASSUME_NONNULL_BEGIN
 @class MLNPolygon;
 @class MLNScaleBar;
 @class MLNShape;
+#if !defined(MBGL_LAYER_PLUGIN_DISABLE_ALL)
 @class MLNPluginLayer;
+#endif
 
 @protocol MLNMapViewDelegate;
 @protocol MLNAnnotation;
@@ -2320,7 +2322,9 @@ of north, the map will automatically snap to exact north.
 /**
  Adds a plug-in layer that is external to this library
  */
+#if !defined(MBGL_LAYER_PLUGIN_DISABLE_ALL)
 - (void)addPluginLayerType:(Class)pluginLayerClass;
+#endif
 
 @end
 

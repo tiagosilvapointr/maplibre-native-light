@@ -1,7 +1,9 @@
 #include <mbgl/annotation/annotation_manager.hpp>
 #include <mbgl/annotation/annotation_source.hpp>
 #include <mbgl/annotation/annotation_tile.hpp>
+#if !defined(MBGL_LAYER_FILL_DISABLE_ALL)
 #include <mbgl/annotation/fill_annotation_impl.hpp>
+#endif
 #include <mbgl/annotation/line_annotation_impl.hpp>
 #include <mbgl/annotation/symbol_annotation_impl.hpp>
 #include <mbgl/layermanager/layer_manager.hpp>
@@ -87,9 +89,15 @@ void AnnotationManager::add(const AnnotationID& id, const LineAnnotation& annota
 }
 
 void AnnotationManager::add(const AnnotationID& id, const FillAnnotation& annotation) {
+#if !defined(MBGL_LAYER_FILL_DISABLE_ALL)
     ShapeAnnotationImpl& impl =
         *shapeAnnotations.emplace(id, std::make_unique<FillAnnotationImpl>(id, annotation)).first->second;
     impl.updateStyle(*style.get().impl);
+#else
+    (void)id;
+    (void)annotation;
+    assert(false);
+#endif
 }
 
 void AnnotationManager::update(const AnnotationID& id, const SymbolAnnotation& annotation) {
@@ -122,6 +130,7 @@ void AnnotationManager::update(const AnnotationID& id, const LineAnnotation& ann
 }
 
 void AnnotationManager::update(const AnnotationID& id, const FillAnnotation& annotation) {
+#if !defined(MBGL_LAYER_FILL_DISABLE_ALL)
     auto it = shapeAnnotations.find(id);
     if (it == shapeAnnotations.end()) {
         assert(false); // Attempt to update a non-existent shape annotation
@@ -131,6 +140,11 @@ void AnnotationManager::update(const AnnotationID& id, const FillAnnotation& ann
     shapeAnnotations.erase(it);
     add(id, annotation);
     dirty = true;
+#else
+    (void)id;
+    (void)annotation;
+    assert(false);
+#endif
 }
 
 void AnnotationManager::remove(const AnnotationID& id) {

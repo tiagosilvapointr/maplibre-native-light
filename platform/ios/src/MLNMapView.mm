@@ -12,15 +12,19 @@
 #include <mbgl/mtl/mtl_fwd.hpp>
 #include <mbgl/mtl/render_pass.hpp>
 #endif
+#if !defined(MBGL_LAYER_PLUGIN_DISABLE_ALL)
 #include <mbgl/plugin/plugin_layer.hpp>
 #include <mbgl/plugin/plugin_layer_factory.hpp>
 #include <mbgl/plugin/plugin_layer_impl.hpp>
+#endif
 #include <mbgl/renderer/paint_parameters.hpp>
 #include <mbgl/renderer/renderer.hpp>
 #include <mbgl/storage/network_status.hpp>
 #include <mbgl/storage/resource_options.hpp>
 #include <mbgl/style/image.hpp>
+#if !defined(MBGL_LAYER_CUSTOM_DISABLE_ALL)
 #include <mbgl/style/layers/custom_layer.hpp>
+#endif
 #include <mbgl/style/style.hpp>
 #include <mbgl/style/transition_options.hpp>
 #include <mbgl/util/action_journal.hpp>
@@ -71,8 +75,10 @@
 #import "MLNMapAccessibilityElement.h"
 #import "MLNMapProjection.h"
 #import "MLNNetworkConfiguration_Private.h"
+#if !defined(MBGL_LAYER_PLUGIN_DISABLE_ALL)
 #import "MLNPluginLayer.h"
 #include "MLNPluginStyleLayer_Private.h"
+#endif
 #import "MLNReachability.h"
 #import "MLNRenderingStats_Private.h"
 #import "MLNScaleBar.h"
@@ -555,11 +561,13 @@ public:
     [self commonInitWithOptions:options];
 
     if (options) {
+#if !defined(MBGL_LAYER_PLUGIN_DISABLE_ALL)
       if (options.pluginLayers) {
         for (Class c in options.pluginLayers) {
           [self addPluginLayerType:c];
         }
       }
+#endif
 
       if (options.styleURL) {
         self.styleURL = options.styleURL;
@@ -7547,6 +7555,7 @@ static void *windowScreenContext = &windowScreenContext;
 /**
  Adds a plug-in layer that is external to this library
  */
+#if !defined(MBGL_LAYER_PLUGIN_DISABLE_ALL)
 - (void)addPluginLayerType:(Class)pluginLayerClass {
   auto layerManager = mbgl::LayerManager::get();
   auto darwinLayerManager = (mbgl::LayerManagerDarwin *)layerManager;
@@ -7678,6 +7687,7 @@ static void *windowScreenContext = &windowScreenContext;
   darwinLayerManager->addLayerType(std::move(factory));
   // darwinLayerManager->addLayerTypeCoreOnly(std::move(factory));
 }
+#endif
 
 - (NSArray<NSString *> *)getActionJournalLogFiles {
   const auto &actionJournal = _mbglMap->getActionJournal();

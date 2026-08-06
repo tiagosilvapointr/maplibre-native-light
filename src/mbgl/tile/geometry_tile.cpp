@@ -2,18 +2,12 @@
 
 #include <mbgl/actor/scheduler.hpp>
 #include <mbgl/geometry/feature_index.hpp>
-#include <mbgl/style/layers/custom_layer.hpp>
-#include <mbgl/renderer/layers/render_custom_layer.hpp>
 #include <mbgl/map/transform_state.hpp>
-#include <mbgl/renderer/buckets/symbol_bucket.hpp>
-#include <mbgl/renderer/layers/render_background_layer.hpp>
-#include <mbgl/renderer/layers/render_symbol_layer.hpp>
 #include <mbgl/renderer/query.hpp>
 #include <mbgl/renderer/render_source.hpp>
 #include <mbgl/renderer/tile_parameters.hpp>
 #include <mbgl/renderer/tile_render_data.hpp>
 #include <mbgl/style/layer_impl.hpp>
-#include <mbgl/style/layers/background_layer.hpp>
 #include <mbgl/tile/geometry_tile_data.hpp>
 #include <mbgl/tile/geometry_tile_worker.hpp>
 #include <mbgl/tile/tile_observer.hpp>

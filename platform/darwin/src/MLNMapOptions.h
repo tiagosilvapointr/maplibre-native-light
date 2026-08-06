@@ -35,7 +35,9 @@ MLN_EXPORT
 /**
  List of plugin classes
  */
+#if !defined(MBGL_LAYER_PLUGIN_DISABLE_ALL)
 @property NSArray *pluginLayers;
+#endif
 
 @end
 

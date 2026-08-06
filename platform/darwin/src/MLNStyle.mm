@@ -1,24 +1,50 @@
 #import "MLNStyle_Private.h"
 
+#if !defined(MBGL_LAYER_BACKGROUND_DISABLE_ALL)
 #import "MLNBackgroundStyleLayer.h"
+#endif
+#if !defined(MBGL_LAYER_CIRCLE_DISABLE_ALL)
 #import "MLNCircleStyleLayer.h"
+#endif
+#if !defined(MBGL_LAYER_COLOR_RELIEF_DISABLE_ALL)
 #import "MLNColorReliefStyleLayer.h"
+#endif
+#if !defined(MBGL_LAYER_FILL_EXTRUSION_DISABLE_ALL)
 #import "MLNFillExtrusionStyleLayer.h"
+#endif
+#if !defined(MBGL_LAYER_FILL_DISABLE_ALL)
 #import "MLNFillStyleLayer.h"
+#endif
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
 #import "MLNHeatmapStyleLayer.h"
+#endif
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 #import "MLNHillshadeStyleLayer.h"
+#endif
+#if !defined(MBGL_LAYER_LINE_DISABLE_ALL)
 #import "MLNLineStyleLayer.h"
+#endif
 #import "MLNMapView_Private.h"
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #import "MLNRasterStyleLayer.h"
+#endif
 #import "MLNStyleLayer.h"
 #import "MLNStyleLayerManager.h"
 #import "MLNStyleLayer_Private.h"
+#if !defined(MBGL_LAYER_SYMBOL_DISABLE_ALL)
 #import "MLNSymbolStyleLayer.h"
+#endif
 
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #import "MLNImageSource.h"
+#endif
 #import "MLNLight_Private.h"
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
 #import "MLNRasterDEMSource.h"
+#endif
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #import "MLNRasterTileSource.h"
+#endif
 #import "MLNShapeSource.h"
 #import "MLNSource.h"
 #import "MLNSource_Private.h"
@@ -32,15 +58,23 @@
 #include <mbgl/style/image.hpp>
 #include <mbgl/style/light.hpp>
 #include <mbgl/style/sources/geojson_source.hpp>
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/style/sources/image_source.hpp>
+#endif
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
 #include <mbgl/style/sources/raster_dem_source.hpp>
+#endif
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/style/sources/raster_source.hpp>
+#endif
 #include <mbgl/style/sources/vector_source.hpp>
 #include <mbgl/style/style.hpp>
 
 #import "NSDate+MLNAdditions.h"
 
+#if !defined(MBGL_LAYER_CUSTOM_DISABLE_ALL)
 #import "MLNCustomStyleLayer.h"
+#endif
 
 #if TARGET_OS_IPHONE
 #import "UIImage+MLNAdditions.h"
@@ -84,8 +118,10 @@ const MLNExceptionName MLNRedundantSourceIdentifierException =
 @property (nonatomic, readonly, weak) id<MLNStylable> stylable;
 @property (nonatomic, readonly) mbgl::style::Style *rawStyle;
 @property (readonly, copy, nullable) NSURL *URL;
+#if !defined(MBGL_LAYER_CUSTOM_DISABLE_ALL)
 @property (nonatomic, readwrite, strong)
     NSMutableDictionary<NSString *, MLNCustomStyleLayer *> *customLayers;
+#endif
 @property (nonatomic) NSMutableDictionary<NSString *, NSDictionary<NSObject *, MLNTextLanguage *> *>
     *localizedLayersByIdentifier;
 
@@ -129,7 +165,9 @@ const MLNExceptionName MLNRedundantSourceIdentifierException =
   if (self = [super init]) {
     _stylable = stylable;
     _rawStyle = rawStyle;
+#if !defined(MBGL_LAYER_CUSTOM_DISABLE_ALL)
     _customLayers = [NSMutableDictionary dictionary];
+#endif
     _localizedLayersByIdentifier = [NSMutableDictionary dictionary];
     MLNLogDebug(@"Initializing with style name: %@ stylable: %@", self.name, stylable);
   }
@@ -204,12 +242,18 @@ const MLNExceptionName MLNRedundantSourceIdentifierException =
     return [[MLNVectorTileSource alloc] initWithRawSource:vectorSource stylable:self.stylable];
   } else if (auto geoJSONSource = rawSource->as<mbgl::style::GeoJSONSource>()) {
     return [[MLNShapeSource alloc] initWithRawSource:geoJSONSource stylable:self.stylable];
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
   } else if (auto rasterSource = rawSource->as<mbgl::style::RasterSource>()) {
     return [[MLNRasterTileSource alloc] initWithRawSource:rasterSource stylable:self.stylable];
+#endif
+#if !defined(MBGL_LAYER_RASTER_DEM_DISABLE_ALL)
   } else if (auto rasterDEMSource = rawSource->as<mbgl::style::RasterDEMSource>()) {
     return [[MLNRasterDEMSource alloc] initWithRawSource:rasterDEMSource stylable:self.stylable];
+#endif
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
   } else if (auto imageSource = rawSource->as<mbgl::style::ImageSource>()) {
     return [[MLNImageSource alloc] initWithRawSource:imageSource stylable:self.stylable];
+#endif
   } else {
     return [[MLNSource alloc] initWithRawSource:rawSource stylable:self.stylable];
   }
@@ -581,6 +625,7 @@ const MLNExceptionName MLNRedundantSourceIdentifierException =
 // MARK: Mapbox Streets source introspection
 
 - (void)localizeLabelsIntoLocale:(nullable NSLocale *)locale {
+#if !defined(MBGL_LAYER_SYMBOL_DISABLE_ALL)
   NSSet<MLNVectorTileSource *> *streetsSources = [self.sources
       filteredSetUsingPredicate:[NSPredicate predicateWithBlock:^BOOL(
                                                  MLNVectorTileSource *_Nullable source,
@@ -603,6 +648,7 @@ const MLNExceptionName MLNRedundantSourceIdentifierException =
       layer.text = localizedText;
     }
   }
+#endif
 }
 
 - (NSSet<MLNVectorTileSource *> *)mapboxStreetsSources {

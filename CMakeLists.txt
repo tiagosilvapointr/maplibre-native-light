@@ -19,8 +19,24 @@ option(MLN_USE_UNORDERED_DENSE "Use ankerl dense containers for performance" ON)
 option(MLN_USE_TRACY "Enable Tracy instrumentation" OFF)
 option(MLN_USE_RUST "Use components in Rust" OFF)
 option(MLN_TEXT_SHAPING_HARFBUZZ "Use haffbuzz to shape complex text" ON)
+option(MLN_WITH_MLT "Build MapLibre Tile (MLT) support" ON)
 option(MLN_CREATE_AUTORELEASEPOOL "Create autoreleasepool in render loop" OFF)
 option(MLN_CREATE_AMALGAMATION "Create static amalgamation of core (requires amerge)" OFF)
+option(MLN_WITH_LAYER_BACKGROUND "Build background layer support" ON)
+option(MLN_WITH_LAYER_CIRCLE "Build circle layer support" ON)
+option(MLN_WITH_LAYER_COLOR_RELIEF "Build color-relief layer support" ON)
+option(MLN_WITH_LAYER_CUSTOM "Build custom layer support" ON)
+option(MLN_WITH_LAYER_CUSTOM_DRAWABLE "Build custom drawable layer support" ON)
+option(MLN_WITH_LAYER_FILL "Build fill layer support" ON)
+option(MLN_WITH_LAYER_FILL_EXTRUSION "Build fill-extrusion layer support" ON)
+option(MLN_WITH_LAYER_HEATMAP "Build heatmap layer support" ON)
+option(MLN_WITH_LAYER_HILLSHADE "Build hillshade layer support" ON)
+option(MLN_WITH_LAYER_LINE "Build line layer support" ON)
+option(MLN_WITH_LAYER_LOCATION_INDICATOR "Build location-indicator layer support" ON)
+option(MLN_WITH_LAYER_PLUGIN "Build plugin layer support" ON)
+option(MLN_WITH_LAYER_RASTER "Build raster layer support" ON)
+option(MLN_WITH_LAYER_RASTER_DEM "Build shared raster-dem source/tile support" ON)
+option(MLN_WITH_LAYER_SYMBOL "Build symbol layer support" ON)
 
 include(cmake/validate-backend-options.cmake)
 include(cmake/clang-tidy.cmake)
@@ -136,6 +152,20 @@ endif()
 if(MLN_CREATE_AMALGAMATION)
     target_compile_options(mbgl-core PRIVATE
         -fvisibility=default
+    )
+endif()
+
+foreach(_layer_option IN ITEMS
+        BACKGROUND CIRCLE COLOR_RELIEF CUSTOM FILL FILL_EXTRUSION HEATMAP HILLSHADE LINE LOCATION_INDICATOR PLUGIN RASTER RASTER_DEM SYMBOL)
+    if(NOT MLN_WITH_LAYER_${_layer_option})
+        target_compile_definitions(mbgl-core PUBLIC MBGL_LAYER_${_layer_option}_DISABLE_ALL=1)
+    endif()
+endforeach()
+
+if(NOT MLN_WITH_LAYER_CUSTOM_DRAWABLE)
+    target_compile_definitions(mbgl-core PUBLIC
+        MLN_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL=1
+        MBGL_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL=1
     )
 endif()
 
@@ -897,10 +927,6 @@ list(APPEND SRC_FILES
     ${PROJECT_SOURCE_DIR}/src/mbgl/tile/tile_operation.cpp
     ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_tile.cpp
     ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_tile.hpp
-    ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mlt_tile.cpp
-    ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mlt_tile.hpp
-    ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mlt_tile_data.cpp
-    ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mlt_tile_data.hpp
     ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mvt_tile.cpp
     ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mvt_tile.hpp
     ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mvt_tile_data.cpp
@@ -1042,6 +1068,44 @@ if (MLN_TEXT_SHAPING_HARFBUZZ)
 
 endif()
 
+if(MLN_WITH_MLT)
+    target_compile_definitions(mbgl-core PUBLIC MLN_WITH_MLT=1)
+    list(APPEND SRC_FILES
+        ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mlt_tile.cpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mlt_tile.hpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mlt_tile_data.cpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/tile/vector_mlt_tile_data.hpp
+    )
+endif()
+
+if(NOT MLN_WITH_LAYER_RASTER_DEM)
+    list(REMOVE_ITEM INCLUDE_FILES
+        ${PROJECT_SOURCE_DIR}/include/mbgl/style/sources/raster_dem_source.hpp
+    )
+    list(REMOVE_ITEM SRC_FILES
+        ${PROJECT_SOURCE_DIR}/src/mbgl/geometry/dem_data.cpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/geometry/dem_data.hpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/renderer/buckets/hillshade_bucket.cpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/renderer/buckets/hillshade_bucket.hpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/renderer/sources/render_raster_dem_source.cpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/renderer/sources/render_raster_dem_source.hpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/style/sources/raster_dem_source.cpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/tile/raster_dem_tile.cpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/tile/raster_dem_tile.hpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/tile/raster_dem_tile_worker.cpp
+        ${PROJECT_SOURCE_DIR}/src/mbgl/tile/raster_dem_tile_worker.hpp
+    )
+endif()
+
+if(NOT MLN_WITH_LAYER_RASTER AND NOT MLN_WITH_LAYER_RASTER_DEM)
+    list(REMOVE_ITEM INCLUDE_FILES
+        ${PROJECT_SOURCE_DIR}/include/mbgl/style/sources/raster_source.hpp
+    )
+    list(REMOVE_ITEM SRC_FILES
+        ${PROJECT_SOURCE_DIR}/src/mbgl/style/sources/raster_source.cpp
+    )
+endif()
+
 target_sources(
     mbgl-core PRIVATE
     ${INCLUDE_FILES}
@@ -1111,7 +1175,9 @@ include(${PROJECT_SOURCE_DIR}/vendor/unordered_dense.cmake)
 include(${PROJECT_SOURCE_DIR}/vendor/vector-tile.cmake)
 include(${PROJECT_SOURCE_DIR}/vendor/wagyu.cmake)
 include(${PROJECT_SOURCE_DIR}/vendor/metal-cpp.cmake)
-include(${PROJECT_SOURCE_DIR}/vendor/maplibre-tile-spec.cmake)
+if(MLN_WITH_MLT)
+    include(${PROJECT_SOURCE_DIR}/vendor/maplibre-tile-spec.cmake)
+endif()
 include(${PROJECT_SOURCE_DIR}/vendor/supercluster.cmake)
 include(${PROJECT_SOURCE_DIR}/vendor/expected-lite.cmake)
 include(${PROJECT_SOURCE_DIR}/vendor/kdbush.cmake)
@@ -1140,7 +1206,6 @@ target_link_libraries(
         mbgl-vendor-unique_resource
         mbgl-vendor-vector-tile
         mbgl-vendor-wagyu
-        mlt-cpp
         $<$<BOOL:${MLN_WITH_METAL}>:mbgl-vendor-metal-cpp>
         $<IF:$<BOOL:${MLN_USE_RUST}>,mbgl-rustutils,mbgl-vendor-csscolorparser>
         $<$<BOOL:${MLN_TEXT_SHAPING_HARFBUZZ}>:mbgl-freetype>
@@ -1155,6 +1220,10 @@ target_link_libraries(
         $<$<BOOL:${MLN_USE_TRACY}>:TracyClient>
         unordered_dense
 )
+
+if(MLN_WITH_MLT)
+    target_link_libraries(mbgl-core PRIVATE mlt-cpp)
+endif()
 
 set(EXPORT_TARGETS
     mbgl-core
@@ -1184,9 +1253,12 @@ set(EXPORT_TARGETS
     mbgl-vendor-unique_resource
     mbgl-vendor-vector-tile
     mbgl-vendor-wagyu
-    mlt-cpp
     unordered_dense
 )
+
+if(MLN_WITH_MLT)
+    list(APPEND EXPORT_TARGETS mlt-cpp)
+endif()
 
 if(MLN_USE_RUST)
     list(APPEND EXPORT_TARGETS mbgl-rustutils rustutils)

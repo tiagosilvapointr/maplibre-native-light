@@ -1,16 +1,11 @@
 #pragma once
 
+#include <mbgl/style/conversion/source_options.hpp>
 #include <mbgl/style/sources/raster_source.hpp>
-#include <mbgl/util/tileset.hpp>
 #include <mbgl/util/variant.hpp>
 
 namespace mbgl {
 namespace style {
-
-struct SourceOptions {
-    std::optional<Tileset::RasterEncoding> rasterEncoding = std::nullopt;
-    std::optional<Tileset::VectorEncoding> vectorEncoding = std::nullopt;
-};
 
 // NOTE: Any derived class must invalidate `weakFactory` in the destructor
 class RasterDEMSource final : public RasterSource {

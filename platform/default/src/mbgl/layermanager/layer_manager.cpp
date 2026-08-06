@@ -1,19 +1,45 @@
 #include <mbgl/layermanager/layer_manager.hpp>
 
+#if !defined(MBGL_LAYER_BACKGROUND_DISABLE_ALL)
 #include <mbgl/layermanager/background_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_CIRCLE_DISABLE_ALL)
 #include <mbgl/layermanager/circle_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_COLOR_RELIEF_DISABLE_ALL)
 #include <mbgl/layermanager/color_relief_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_CUSTOM_DISABLE_ALL)
 #include <mbgl/layermanager/custom_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_FILL_EXTRUSION_DISABLE_ALL)
 #include <mbgl/layermanager/fill_extrusion_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_FILL_DISABLE_ALL)
 #include <mbgl/layermanager/fill_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_HEATMAP_DISABLE_ALL)
 #include <mbgl/layermanager/heatmap_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_HILLSHADE_DISABLE_ALL)
 #include <mbgl/layermanager/hillshade_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_LINE_DISABLE_ALL)
 #include <mbgl/layermanager/line_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_LOCATION_INDICATOR_DISABLE_ALL)
 #include <mbgl/layermanager/location_indicator_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_RASTER_DISABLE_ALL)
 #include <mbgl/layermanager/raster_layer_factory.hpp>
+#endif
+#if !defined(MBGL_LAYER_SYMBOL_DISABLE_ALL)
 #include <mbgl/layermanager/symbol_layer_factory.hpp>
+#endif
 #include <mbgl/util/logging.hpp>
+#if !defined(MLN_LAYER_CUSTOM_DRAWABLE_DISABLE_ALL)
 #include <mbgl/layermanager/custom_drawable_layer_factory.hpp>
+#endif
 
 #include <map>
 #include <memory>

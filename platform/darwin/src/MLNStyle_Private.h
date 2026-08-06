@@ -1,6 +1,8 @@
 #import "MLNStyle.h"
 
+#if !defined(MBGL_LAYER_FILL_DISABLE_ALL)
 #import "MLNFillStyleLayer.h"
+#endif
 #import "MLNStyleLayer.h"
 
 NS_ASSUME_NONNULL_BEGIN
@@ -13,7 +15,9 @@ class Style;
 
 @class MLNAttributionInfo;
 @class MLNMapView;
+#if !defined(MBGL_LAYER_CUSTOM_DISABLE_ALL)
 @class MLNCustomStyleLayer;
+#endif
 @class MLNVectorTileSource;
 @class MLNVectorStyleLayer;
 
@@ -27,8 +31,10 @@ class Style;
 - (nullable NSArray<MLNAttributionInfo *> *)attributionInfosWithFontSize:(CGFloat)fontSize
                                                                linkColor:
                                                                    (nullable MLNColor *)linkColor;
+#if !defined(MBGL_LAYER_CUSTOM_DISABLE_ALL)
 @property (nonatomic, readonly, strong)
     NSMutableDictionary<NSString *, MLNCustomStyleLayer *> *customLayers;
+#endif
 - (void)setStyleClasses:(NSArray<NSString *> *)appliedClasses
      transitionDuration:(NSTimeInterval)transitionDuration;
 

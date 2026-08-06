@@ -15,7 +15,9 @@
 #import <mbgl/style/transition_options.hpp>
 #import <mbgl/style/types.hpp>
 #import "MLNConversion.h"
+#if !defined(MBGL_LAYER_SYMBOL_DISABLE_ALL)
 #import "MLNSymbolStyleLayer.h"
+#endif
 
 #import <mbgl/util/enum.hpp>
 #include <mbgl/util/interpolate.hpp>
@@ -240,6 +242,7 @@ private:  // Private utilities for converting from mgl to mbgl values
   // Color
   void getMBGLValue(MLNColor *rawValue, mbgl::Color &mbglValue) { mbglValue = rawValue.mgl_color; }
 
+#if !defined(MBGL_LAYER_SYMBOL_DISABLE_ALL)
   // VariableAnchorOffsetCollection
   void getMBGLValue(id rawValue, mbgl::VariableAnchorOffsetCollection &mbglValue) {
     if ([rawValue isKindOfClass:[NSArray class]]) {
@@ -265,6 +268,7 @@ private:  // Private utilities for converting from mgl to mbgl values
       mbglValue = mbgl::VariableAnchorOffsetCollection(std::move(anchorOffsets));
     }
   }
+#endif
 
   // Image
   void getMBGLValue(NSString *rawValue, mbgl::style::expression::Image &mbglValue) {
